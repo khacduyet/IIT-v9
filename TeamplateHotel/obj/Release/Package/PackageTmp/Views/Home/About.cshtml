@@ -1,0 +1,50 @@
+﻿@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@using ProjectLibrary.Database
+@{
+    ViewBag.HomePage = true;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var lang = Request.Cookies["LanguageID"].Value;
+    List<Advertising> qc = CommentController.GetAdvertisings();
+    Menu menuHome = ViewBag.MenuHome ?? new Menu();
+    Menu menu = ViewBag.Menu ?? new Menu();
+    Hotel hotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
+    List<Overview> ov = CommentController.getOverview(lang);
+    List<Gallery> galleries = CommentController.lstGallery();
+    EAbout ab = CommentController.getAbout(lang);
+    Welcome wc = CommentController.getWelcome(lang);
+}
+
+@Html.Partial("PartialView/_About")
+@Html.Partial("PartialView/_BookingNow")
+
+<section id="gallery">
+
+    <div class="container-fluid">
+        <div class="section-title m-auto">
+            <h3 class="text-center">
+                @GetLanguage.Language(lang, "Gallery")
+            </h3>
+        </div>
+        <div id="image-gallery">
+            <div class="grid gallerry-about">
+                @foreach (var item in galleries.OrderByDescending(x=>Guid.NewGuid()).Take(8))
+                {
+                    <div class="item image">
+                        <div class="img-wrapper">
+                            <a href="@item.LargeImage"><img src="@item.LargeImage" class="img-responsive"></a>
+                            <div class="img-overlay">
+                                <i class="fal fa-plus-hexagon"></i>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- End row -->
+            </div>
+            <!-- End image gallery -->
+        </div>
+    </div>
+    <!-- End container -->
+</section>

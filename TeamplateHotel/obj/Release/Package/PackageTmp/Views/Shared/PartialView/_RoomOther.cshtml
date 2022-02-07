@@ -1,0 +1,39 @@
+﻿@using TeamplateHotel.Controllers
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using ProjectLibrary.Database
+@model List<Room>
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Hotel hotel = CommentController.DetailHotel(lang);
+    Welcome wc = CommentController.getWelcome(lang);
+}
+<section class="section">
+    <div class="service_index service-details other-rooms" style="background-image: url(@wc.BannerRoom);">
+        <div class="container">
+            <div class="section-title">
+                <h3>
+                    @ViewBag.RoomOther
+                </h3>
+                <div class="mb-5">
+                    @wc.DescRoom
+                </div>
+            </div>
+        </div>
+        <div class="owl-other-article owl-carousel owl-theme">
+            @foreach (var item in Model)
+            {
+                <div class="item">
+                    <figure>
+                        <figcaption style="background-image:url(@item.Image)">
+                            <img src="@item.Image" alt="">
+                        </figcaption>
+                        @*<a href="/@item.MenuAlias/@item.ID/@item.Alias" class="btn btn-clean">@GetLanguage.Language(lang, "SHOW MORE")</a>*@
+                        <a href="/@item.MenuAlias/@item.ID/@item.Alias" class="btn btn-clean">@item.Title</a>
+                    </figure>
+                </div>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,175 @@
+﻿@using ProjectLibrary.Config
+@model TeamplateHotel.Areas.Administrator.EntityModel.EAbout
+@{
+    ViewBag.Title = "Cập nhật About";
+    Layout = "~/Areas/Administrator/Views/Templates/_LayoutPage.cshtml";
+}
+
+<div class="span12">
+    <div class="widget ">
+        <div class="widget-header">
+            <i class=" icon-plus-sign"></i>
+            <h3>@ViewBag.Title</h3>
+        </div> <!-- /widget-header -->
+
+        <div class="widget-content">
+            @Html.ValidationSummary(true)
+            @using (Html.BeginForm("Update", "About", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(c => c.ID)
+                <div class="control-group">
+                    <label class="control-label" for="Title">Tiêu đề<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.Title, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.Title)
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(c => c.Description, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextAreaFor(c => c.Description, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.Description)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(c => c.Image, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.Image, new { @class = "span4 inputbox upload" })
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(c => c.Image1, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.Image1, new { @class = "span4 inputbox upload" })
+                        @Html.ValidationMessageFor(c => c.Image1)
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(c => c.Image2, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.Image2, new { @class = "span4 inputbox upload" })
+                        @Html.ValidationMessageFor(c => c.Image2)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Title">Tiêu đề cơ sở<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.TitleBase, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.TitleBase)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="Title">Mô tả cơ sở<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextAreaFor(c => c.DescriptionBase, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.DescriptionBase)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Title">Tiêu đề đánh giá<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.TitleReview, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.TitleReview)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="Title">Mô tả đánh giá<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextAreaFor(c => c.DescriptionReview, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.DescriptionReview)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Title">Tiêu đề banner<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.TitleBanner, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.TitleBanner)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="Title">Mô tả banner<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextAreaFor(c => c.DescriptionBanner, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.DescriptionBanner)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Title">Tiêu đề nút bấm<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.TitleButton, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.TitleButton)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Title">Link ra ngoài<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.CheckBoxFor(c => c.External)
+                        @Html.ValidationMessageFor(c => c.External)
+                    </div>
+                </div>
+
+                <div class="control-group" id="linkOutSide">
+                    <label class="control-label" for="Title">Đường dẫn link</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.ExternalPath, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.ExternalPath)
+                    </div>
+                </div>
+
+                <div class="control-group" id="MenuIndex">
+                    @Html.LabelFor(c => c.menuId, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownListFor(c => c.menuId, new SelectList(ViewBag.ListParentMenu, "Value", "Text"), new { @class = "span3" })
+                        @Html.ValidationMessageFor(c => c.menuId)
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                    <a href="@Url.Action("Index","About")" class="btn">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        AutoAlias('Title', 'Alias');
+        bindUl();
+        if ($("#Type").val() == 9) {
+            $(".linkoutsite").show();
+        } else {
+            $(".linkoutsite").hide();
+        }
+
+        $("#Type").change(function () {
+            if ($(this).val() == 9) {
+                $(".linkoutsite").show();
+            } else {
+                $(".linkoutsite").hide();
+            }
+        });
+        checked();
+        $("#External").change(function () {
+            checked();
+        });
+    });
+
+    function checked() {
+        var checkLink = $("#External").is(":checked");
+        if (checkLink == false) {
+            $("#linkOutSide").attr("hidden","hidden");
+            $("#MenuIndex").removeAttr("hidden");
+        } else {
+            $("#MenuIndex").attr("hidden", "hidden");
+            $("#linkOutSide").removeAttr("hidden");
+        }
+    }
+</script>

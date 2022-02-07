@@ -1,0 +1,38 @@
+﻿@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@using ProjectLibrary.Database
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    EAbout ab = CommentController.getAbout(lang);
+    Welcome wc = CommentController.getWelcome(lang);
+}
+
+<section>
+    <div class="section">
+        <div class="book-now-index">
+            <section class="full-bleed-component attention-todetail-wrapper" id="AttentionToDetail">
+                <div class="attention-todetail-component" style="background-image: url(@wc.BannerAbout)">
+
+                    <div class="attention-todetail-info aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
+                        <h2 data-aos="fade-up" data-aos-duration="5000" class="aos-init aos-animate"><small class="aos-init aos-animate" data-aos="fade-up" data-aos-duration="2000">@ab.TitleBanner</small> <br>@ab.DescriptionBanner</h2>
+                        <p class="attention-todetail-subtitle">
+                            <!-- Book now for the best deals! -->
+                        </p>
+                        <div class="button-box aos-init aos-animate" data-aos="fade-up" data-aos-duration="6000">
+                            @if (ab.External)
+                            {
+                                <a href="@ab.ExternalPath" class="attention-todetail-btn jumeirah-btn jumeirah-secondary-btn">@ab.TitleButton  <i class="far fa-arrow-right"></i></a>
+                            }
+                            else
+                            {
+                                <a href="/@ab.menuAlias" class="attention-todetail-btn jumeirah-btn jumeirah-secondary-btn">@ab.TitleButton  <i class="far fa-arrow-right"></i></a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>

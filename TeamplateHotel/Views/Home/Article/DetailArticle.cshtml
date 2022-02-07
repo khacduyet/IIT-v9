@@ -1,0 +1,24 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using ProjectLibrary.Config
+@model TeamplateHotel.Models.DetailArticle
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+    Hotel detailHotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
+    var lang = Request.Cookies["LanguageID"].Value;
+    List<Comment> modelCom = ViewBag.modelCom;
+}
+@Html.Partial("Banner/Banner")
+<section class="py-100">
+    <div class="container">
+        <div class="section__title">
+            <h3>@Model.Article.Title</h3>
+        </div>
+        <div class="section__text">
+            <img src="@Model.Article.Image" alt="">
+            @Html.Raw(Model.Article.Content)
+        </div>
+    </div>
+</section>

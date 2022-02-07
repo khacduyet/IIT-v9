@@ -1,0 +1,131 @@
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1200px; } }
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1320px; } }
+@media (min-width: 1921px) {
+  .container {
+    max-width: 1800px; } }
+@media (max-width: 1200px) and (min-width: 1024px) {
+  .footer__menu a {
+    padding-right: 2rem; } }
+@media (max-width: 1023px) {
+  .nav-icon {
+    display: block; }
+
+  .header__logo {
+    width: 18%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%); }
+
+  .fixed .header__logo {
+    width: 18%; }
+
+  .room-list {
+    padding: 0; }
+
+  .serv-item {
+    margin-bottom: 1.5rem; }
+
+  .copyright {
+    text-align: center; }
+
+  .footer__cr {
+    justify-content: center; }
+
+  .width-1-4 {
+    width: 50%; }
+
+  .filter {
+    display: flex;
+    justify-content: space-between;
+    margin-left: -10px;
+    margin-right: -10px; }
+
+  .filter li {
+    margin: 0 10px 20px; }
+
+  .common_btn {
+    padding: 0 32px; }
+
+  .single_counter {
+    margin-bottom: 2rem; }
+
+  .py-100 {
+    padding: 5rem 0; }
+
+  .room__item {
+    margin-bottom: 2rem; } }
+@media (max-width: 767px) {
+  html {
+    font-size: 50%; }
+
+  body {
+    font-size: 1.7rem; }
+
+  .header__logo {
+    width: 20%;
+    padding: 5px 0; }
+
+  .menu-mobile {
+    padding: 2rem; }
+
+  .header__top {
+    font-size: 1.2rem; }
+
+  .header__social li {
+    margin: 0 1rem; }
+
+  .quick-book {
+    width: auto;
+    left: 15px;
+    right: 15px;
+    bottom: 10px; }
+
+  .about-us {
+    padding: 5rem 0; }
+
+  .about__detail {
+    padding: 2rem 2.5rem 3rem; }
+
+  .frame_video {
+    height: 320px !important; }
+
+  .bg_holder h2 {
+    padding-top: 8rem; }
+
+  .video_btn img {
+    width: 10rem; }
+
+  .footer__text {
+    width: 100%; }
+
+  .footer__contact li {
+    margin: 0 0.8rem 1rem; }
+
+  .copyright {
+    margin-bottom: 1rem; }
+
+  .footer__cr {
+    flex-wrap: wrap;
+    line-height: 2; }
+
+  .single_item img {
+    height: 150px; } }
+@media (max-width: 767px) {
+  .filter {
+    flex-wrap: wrap;
+    margin-left: -3px;
+    margin-right: -3px; }
+
+  .filter li {
+    font-size: 1.4rem;
+    margin: 0 3px 10px; }
+
+  .common_btn {
+    padding: 0px 12px;
+    line-height: 28px; } }
+
+/*# sourceMappingURL=responsive.css.map */

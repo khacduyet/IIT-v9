@@ -1,0 +1,167 @@
+﻿@using ProjectLibrary.Config
+@model ProjectLibrary.Database.Welcome
+@{
+    ViewBag.Title = "Cập nhật welcome";
+    Layout = "~/Areas/Administrator/Views/Templates/_LayoutPage.cshtml";
+}
+
+<div class="span12">
+    <div class="widget ">
+        <div class="widget-header">
+            <i class=" icon-plus-sign"></i>
+            <h3>@ViewBag.Title</h3>
+        </div> <!-- /widget-header -->
+
+        <div class="widget-content">
+            @Html.ValidationSummary(true)
+            @using (Html.BeginForm("Update", "Welcome", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(c => c.Id)
+                <div class="control-group">
+                    <label class="control-label" for="Title">Tiêu đề phần đặt phòng<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.TitleTag, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.TitleTag)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Content"><span class="asterisk">*</span></label>
+                    <div class="controls" id="ContentBenefits" style="height: 200px; width: 80%; overflow-y: scroll; border: 1px solid #000; border-radius: 5px">
+                        @if (Model.DescTag != "" && Model.DescTag != null)
+                        {
+                            string[] arr = Model.DescTag.Split('|').ToArray();
+                            foreach (var item in arr)
+                            {
+                                <div class='control-group' style='position: relative;'>
+                                    <label class='label'>Tiêu chí</label>
+                                    Nội dung &nbsp;<input class='span8 inputbox' name='content' type='text' value='@item'>
+                                    <button type='button' onclick='remove(this)' style='position: absolute; right: 0;'><i class='icon-remove'></i></button>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <h2>Chưa có tiêu chí nào được đặt!</h2>
+                        }
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.ValidationMessageFor(c => c.DescTag)
+                    <div class="controls">
+                        <button id="addBenefit" type="button">Thêm tiêu chí</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(c => c.BannerAbout, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.BannerAbout, new { @class = "span4 inputbox upload" })
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(c => c.BannerGallery, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.BannerGallery, new { @class = "span4 inputbox upload" })
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(c => c.BannerRoom, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.BannerRoom, new { @class = "span4 inputbox upload" })
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(c => c.BannerRoomPage, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.BannerRoomPage, new { @class = "span4 inputbox upload" })
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(c => c.BannerService, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.BannerService, new { @class = "span4 inputbox upload" })
+                    </div>
+                </div>
+
+                <div class="control-group" style="margin-top: 40px">
+                    <label class="control-label" for="Content">Mô tả phần đặt phòng</label>
+                    <div class="controls">
+                        <p>
+                            <span class="error-login">@Html.ValidationMessageFor(a => a.DescRoom)</span>
+                        </p>
+                        @Html.TextAreaFor(c => c.DescRoom, new { @class = "basic-ckeditor" })
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Title">Tiêu đề phần dịch vụ<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.DescUtilities, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.DescUtilities)
+                    </div>
+                </div>
+
+
+                <div class="form-actions">
+                    <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                    <a href="@Url.Action("Index","Welcome")" class="btn">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        AutoAlias('Title', 'Alias');
+        bindUl();
+        if ($("#Type").val() == 9) {
+            $(".linkoutsite").show();
+        } else {
+            $(".linkoutsite").hide();
+        }
+
+        $("#Type").change(function () {
+            if ($(this).val() == 9) {
+                $(".linkoutsite").show();
+            } else {
+                $(".linkoutsite").hide();
+            }
+        });
+        checked();
+        $("#External").change(function () {
+            checked();
+        });
+
+        $("#addBenefit").click(function () {
+            var str = "<div class='control-group' style='position: relative;'>";
+            str += "<label class='label'>Tiêu chí</label>";
+            str += "Nội dung &nbsp;<input class='span8 inputbox' name='content' type='text' value=''>&nbsp;&nbsp;";
+            str += "<button type='button' onclick='remove(this)' style='position: absolute; right: 0;'><i class='icon-remove'></i></button>";
+            str += "</div>";
+            $("#ContentBenefits").append(str);
+            $("#ContentBenefits").find("h2").remove();
+        });
+    });
+
+    function checked() {
+        var checkLink = $("#External").is(":checked");
+        if (checkLink == false) {
+            $("#linkOutSide").attr("hidden", "hidden");
+            $("#MenuIndex").removeAttr("hidden");
+        } else {
+            $("#MenuIndex").attr("hidden", "hidden");
+            $("#linkOutSide").removeAttr("hidden");
+        }
+    }
+
+    function remove(element) {
+        var getParent = $(element).parent().remove();
+        var c = $("#ContentBenefits").find(".control-group");
+        if (c.length == 0) {
+            $("#ContentBenefits").append("<h2>Chưa có tiêu chí nào được đặt!</h2>");
+        }
+    };
+</script>

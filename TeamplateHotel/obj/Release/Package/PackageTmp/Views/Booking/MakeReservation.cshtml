@@ -1,0 +1,264 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@model ProjectLibrary.Database.Room
+@{
+    ViewBag.Title = "Booking";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var lang = Request.Cookies["LanguageID"].Value;
+    Hotel hotel = CommentController.DetailHotel(lang);
+    Menu menu = ViewBag.Menu ?? new Menu();
+}
+<div class="section">
+    <div class="main-request">
+        <div class="container">
+            <div class="box-progress">
+                <div class="box-progress-flex">
+                    <div class="progress-item">
+                        <span class="progress-number active">
+                            1
+                        </span>
+                        <span class="progress-text">
+                            @GetLanguage.Language(lang, "DetailPack")
+                        </span>
+                    </div>
+                    <div class="progress-item">
+                        <span class="progress-number">
+                            2
+                        </span>
+                        <span class="progress-text">
+                            @GetLanguage.Language(lang, "FillInfo")
+                        </span>
+                    </div>
+                    <div class="progress-item">
+                        <span class="progress-number">
+                            3
+                        </span>
+                        <span class="progress-text">
+                            @GetLanguage.Language(lang, "FinishRequest")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col col-12 col-md-6 col-lg-5 s_gutters">
+                    <div class="card card--border">
+                        <img class="card-img-top" src="@Model.Image" alt="">
+                        <div class="card-body">
+                            <div class="content-tour">
+                                <div class="gioithieu-dau">
+                                    <h2>@Model.Title</h2>
+                                    <div class="location">
+                                        @Html.Raw(Model.Description)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card--border mt-2 mb-2">
+                        <div class="card-body">
+                            <div class="card-price">
+                                <h2>@GetLanguage.Language(lang, "Price")</h2>
+                                <span class="price">@GetLanguage.Language(lang, "money") @(((double)Model.Price).ToString("N0"))/@GetLanguage.Language(lang, "Day")</span>
+                            </div>
+                            <div class="card-info">
+                                <span>@GetLanguage.Language(lang, "PriceVAT")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-12 col-md-6 col-lg-7 s_gutters">
+                    <div class="card card--border">
+                        <div class="card-body">
+                            <div class="form-request">
+                                <div class="title-form">
+                                    <h2 class="title">@GetLanguage.Language(lang, "InfoBookRoom")</h2>
+                                    <span>@GetLanguage.Language(lang, "FillAllInfo")</span>
+                                </div>
+                                <form id="formBook" action="/Booking/SendBooking" method="post">
+                                    <input type="hidden" name="InfoBooking" value="@Model.ID" />
+                                    <input type="hidden" name="TotalMoney" value="@Model.Price" />
+                                    <div class="table-a">
+                                        <table class="table">
+                                            <tr>
+                                                <td>
+                                                    @GetLanguage.Language(lang, "Gender")
+                                                </td>
+                                                <td class="d-flex">
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="gender-form-check" name="Gender" value="Mr" checked>
+
+                                                            <span class="checkmark"></span>
+                                                            <span class="vocative">@GetLanguage.Language(lang, "Male")</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="gender-form-check" name="Gender" value="Ms">
+
+                                                            <span class="checkmark"></span>
+                                                            <span class="vocative">@GetLanguage.Language(lang, "Female")</span>
+                                                        </label>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>@GetLanguage.Language(lang, "Name")</td>
+                                                <td>
+                                                    <div class="form-group">
+
+                                                        <input type="text" class="form-control" name="FullName" placeholder="" required>
+                                                        <small class="msg_error"></small>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>@GetLanguage.Language(lang, "Tel")</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="tel" class="form-control" name="Phone" placeholder="" required>
+                                                        <input type="text" hidden class="form-control" name="ClientIdBook" value="6201" placeholder="">
+                                                        <small class="msg_error"></small>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td>
+                                                    <div class="form-group">
+
+                                                        <input type="email" class="form-control" name="Email" placeholder="" required>
+                                                        <small class="msg_error"></small>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="table-a no_border">
+                                        <h2>@GetLanguage.Language(lang, "InfoTeam")</h2>
+                                        <table class="table no-mbottom">
+                                            <tr>
+                                                <td>@GetLanguage.Language(lang, "Check-in time")</td>
+                                                <td>
+                                                    <div class="form-group form_date">
+                                                        <input type="text" name="CheckIn" id="" class="form-control check-in" value="22, Jan, 2022" readonly aria-describedby="helpId" style="background-color: #fff;">
+                                                        <small class="msg_error"></small>
+                                                        <div class="bg-icon"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td> @GetLanguage.Language(lang, "Adult")</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" name="Adult" id="Adult" placeholder="" value="1" required min="1">
+                                                        <small class="msg_error"></small>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>@GetLanguage.Language(lang, "Child")</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" name="Child" id="Child" placeholder="" value="0" required min="0">
+                                                        <small class="msg_error"></small>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>@GetLanguage.Language(lang, "Departure")</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="Country" placeholder="" required>
+                                                        <small class="msg_error"></small>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>@GetLanguage.Language(lang, "DetailRequest")</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" rows="5" id="comment" name="Request"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="w-100 text-center">
+                                        <button type="submit" class="push-request" name="PayDirect"><span>@GetLanguage.Language(lang, "SendRequest")</span></button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#wraploadding").hide();
+            function LoadingSendEmail() {
+                $("#wraploadding").show();
+                $("#wraploadding").css("width", $(window).width());
+                $("#wraploadding").css("height", $(window).height());
+                $("#imgloadding").css("top", ($(window).height() / 2) - 80);
+            }
+
+            //validate
+            jQuery.validator.setDefaults({
+                debug: true,
+                success: "valid"
+            });
+            $("#frmBooking").validate({
+                rules: {
+                    'Phone': {
+                        required: true,
+                    },
+                    'FullName': {
+                        required: true,
+                    },
+                    'Email': {
+                        required: true,
+                        email: true
+                    },
+                    'Country': {
+                        required: true,
+                    },
+                    'Address': {
+                        required: true,
+                    },
+                    'City': {
+                        required: true,
+                    },
+                },
+                messages: {
+                    'Phone': "Please select Phone",
+                    'Address': "Please select gender",
+                    'FullName': "Please enter Full Name",
+                    'Email': "Please enter email adress",
+                    'Country': "Please select country",
+                    'City': "Please agree team conditions",
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                    LoadingSendEmail();
+                }
+            });
+        });
+    </script>
+}
+
+

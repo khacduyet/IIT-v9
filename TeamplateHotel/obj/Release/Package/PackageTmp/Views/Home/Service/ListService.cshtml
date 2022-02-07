@@ -1,0 +1,87 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Controllers
+@model IEnumerable<Service>
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+    Welcome wc = CommentController.getWelcome(lang);
+    ECounter counter = CommentController.getCounter(lang);
+}
+@section styles{
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.0/dist/aos.css">
+}
+<div class="about">
+    <div class="count-service">
+        <div class="container">
+            <div class="">
+                <div class="row">
+                    <div class="count_index">
+                        <div class="meeting-count__block" data-aos="fade-up" data-aos-duration="1000">
+                            <div class="d-flex justify-content-between">
+                                @{
+                                    string[] arr = counter.Counter.Split('|').ToArray();
+                                    foreach (var item in arr)
+                                    {
+                                        var c = item.Split('~').ToArray();
+                                        if (c.Length == 3)
+                                        {
+                                            <div class="item">
+                                                <div class="meeting-count__item">
+                                                    <h1 class="title">@c[0]</h1>
+                                                    <p class="count">@c[1]</p>
+                                                    <span>@c[2]</span>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<main>
+    <div class="container">
+        <div class="facility-addons">
+            <div class="content">
+                <div class="cards">
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-xs-6 col-md-6">
+                                <figure>
+                                    <figcaption style="background-image:url(@item.Image)">
+                                        <img src="@item.Image" alt="">
+                                    </figcaption>
+                                    <a href="/@item.MenuAlias/@item.Id/@item.Alias" class="btn btn-clean button">
+                                        @item.Title
+                                        <div class="button__horizontal"></div>
+                                        <div class="button__vertical"></div>
+                                    </a>
+                                </figure>
+                            </div>
+                        }
+                    </div>
+                    <!--/row-->
+                </div>
+                <!--/cards-->
+            </div>
+        </div>
+    </div>
+    <!--/tab-content-->
+</main>
+
+@section scripts{
+    <script src="https://unpkg.com/aos@2.3.0/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1200,
+        })
+    </script>
+} 

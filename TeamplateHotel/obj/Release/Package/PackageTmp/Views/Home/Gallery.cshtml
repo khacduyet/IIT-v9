@@ -1,0 +1,33 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Handler
+@using PagedList.Mvc
+@model  PagedList.IPagedList<Gallery>
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menuHome = ViewBag.MenuHome ?? new Menu();
+    var lang = Request.Cookies["LanguageID"].Value;
+    Menu menu = ViewBag.Menu ?? new Menu();
+}
+
+<section id="gallery">
+    <div class="container">
+        <div id="image-gallery">
+            <div class="grid">
+                @foreach (var item in Model.OrderByDescending(x=> Guid.NewGuid()).Take(16))
+                {
+                    <div class="item image">
+                        <div class="img-wrapper">
+                            <a href="@item.LargeImage"><img src="@item.LargeImage" class="img-responsive"></a>
+                            <div class="img-overlay">
+                                <i class="fal fa-plus-hexagon"></i>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- End row -->
+        </div>
+        <!-- End image gallery -->
+    </div>
+    <!-- End container -->
+</section>

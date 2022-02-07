@@ -1,0 +1,115 @@
+﻿@using ProjectLibrary.Config
+@model ProjectLibrary.Database.Welcome
+@{
+    ViewBag.Title = "Cập nhật welcome";
+    Layout = "~/Areas/Administrator/Views/Templates/_LayoutPage.cshtml";
+}
+
+<div class="span12">
+    <div class="widget ">
+        <div class="widget-header">
+            <i class=" icon-plus-sign"></i>
+            <h3>@ViewBag.Title</h3>
+        </div> <!-- /widget-header -->
+
+        <div class="widget-content">
+            @Html.ValidationSummary(true)
+            @using (Html.BeginForm("Update", "Welcome", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(c => c.Id)
+                <div class="control-group">
+                    <label class="control-label" for="TitleTag">Tiêu đề trình phát video<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.TitleTag, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.TitleTag)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="DescTag">Đường dẫn video<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.BannerRoom, new { @class = "span4" })
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="DescTag">Banner video<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.BannerRoomPage, new { @class = "span4 inputbox upload" })
+                    </div>
+                </div>
+                @*<div class="control-group">
+                <label class="control-label" for="DescTag">Đường dẫn video<span class="asterisk">*</span></label>
+                <div class="controls">
+                    @Html.TextBoxFor(c => c.DescTag, new { @class = "span4" })
+                    @Html.ValidationMessageFor(c => c.DescTag)
+                </div>
+            </div>*@
+
+                <div class="control-group">
+                    <label class="control-label" for="DescTag">Tiêu đề thư viện ảnh<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.BannerAbout, new { @class = "span4" })
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="DescTag">Mô tả thư viện ảnh<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.BannerGallery, new { @class = "asic-ckeditor" })
+                    </div>
+                </div>
+
+                @*
+
+            <div class="control-group">
+                @Html.LabelFor(c => c.BannerService, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.TextBoxFor(c => c.BannerService, new { @class = "span4 inputbox upload" })
+                </div>
+            </div>*@
+
+                <div class="control-group">
+                    <label class="control-label" for="Title">Tiêu đề phần dịch vụ<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.DescUtilities, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.DescUtilities)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Content">Mô tả phần dịch vụ</label>
+                    <div class="controls">
+                        <p>
+                            <span class="error-login">@Html.ValidationMessageFor(a => a.DescRoom)</span>
+                        </p>
+                        @Html.TextAreaFor(c => c.DescRoom, new { @class = "basic-ckeditor" })
+                    </div>
+                </div>
+
+
+                <div class="form-actions">
+                    <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                    <a href="@Url.Action("Index","Welcome")" class="btn">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        AutoAlias('Title', 'Alias');
+        bindUl();
+        if ($("#Type").val() == 9) {
+            $(".linkoutsite").show();
+        } else {
+            $(".linkoutsite").hide();
+        }
+
+        $("#Type").change(function () {
+            if ($(this).val() == 9) {
+                $(".linkoutsite").show();
+            } else {
+                $(".linkoutsite").hide();
+            }
+        });
+    });
+</script>

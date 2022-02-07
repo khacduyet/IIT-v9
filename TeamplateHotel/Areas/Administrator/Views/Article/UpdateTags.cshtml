@@ -1,0 +1,55 @@
+﻿@model TeamplateHotel.Areas.Administrator.EntityModel.EArtTag
+@using TeamplateHotel.Controllers
+@{
+    ViewBag.Title = "Update Tags";
+    Layout = "~/Areas/Administrator/Views/Templates/_LayoutPage.cshtml";
+}
+
+<div class="span12" style="width: 300px;">
+    <div class="widget " style="overflow: unset">
+        <div class="widget-header">
+            <i class=" icon-plus-sign"></i>
+            <h3>@ViewBag.Title</h3>
+        </div> <!-- /widget-header -->
+
+        <div class="widget-content">
+            @Html.ValidationSummary(true)
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+            <fieldset>
+                @Html.HiddenFor(m => m.ID)
+                @if (Model == null)
+                {
+                    <input type="hidden" name="ArticleId" value="@ViewBag.ArtId" />
+                }
+                else
+                {
+                    @Html.HiddenFor(m => m.ArticleId)
+                }
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Tags)
+                </div>
+                <div class="editor-field">
+                    @Html.ListBoxFor(model => model.selectedIdArray, (MultiSelectList)ViewBag.Tags, new { @id = "selectTags", @class = "form-control", @multiple = "multiple" })
+                </div>
+                @Html.ValidationMessageFor(model => model.selectedIdArray, "", new { @class = "text-danger" })
+                <p style="margin-top: 20px;">
+                    <input type="submit" class="btn btn-primary" value="Save" />
+                </p>
+            </fieldset>
+            }
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $("#selectTags").chosen();
+    </script>
+}

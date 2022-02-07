@@ -1,0 +1,388 @@
+.service__title {
+    margin-bottom: 70px;
+    text-align: center;
+    position: relative;
+}
+
+.service__title h1 {
+    font-size: 36px;
+    line-height: 46px;
+}
+
+.service__title p {
+    font-size: 12px;
+    font-family: "Quicksand";
+}
+
+.service__line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 10px 0;
+    height: 1px;
+    width: 100px;
+    background-color: #d7dadd;
+}
+
+.service__hook-01,
+.service__hook-02 {
+    background-position: center center;
+    background-size: cover;
+    padding: 30px;
+}
+
+.service__hook-01 {
+    background-image: url(/images/room/room-01.jpg);
+}
+
+.service__hook-02 {
+    background-image: url(/images/room/room-02.jpg);
+}
+
+.service__block {
+    background-color: #fff;
+}
+
+.service__block-center {
+    padding: 20px;
+}
+
+.service__block-title {
+    font-size: 28px;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.service__block-desc {
+    font-family: "Quicksand";
+}
+
+.service__block-desc ul {
+    list-style: inside;
+}
+
+.service__icon {
+    padding: 60px 0 45px;
+}
+
+.service__icon-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    color: #0b3d24;
+}
+
+.service__icon-item svg {
+    font-size: 36px;
+}
+
+.service__reserve {
+    background-color: #f7f7f7;
+    padding: 60px 15px;
+    text-align: center;
+}
+
+.service__reserve .header-booking {
+    height: 145px;
+}
+
+.service__reserve-title {
+    font-size: 36px;
+    line-height: 46px;
+    color: #0b3d24;
+}
+
+.service__reserve-block {
+    display: flex;
+    justify-content: center;
+}
+
+.service__reserve-line {
+    height: 1px;
+    width: 100px;
+    background-color: #0b3d24;
+}
+
+.service .header-booking {
+    margin: 40px 0;
+}
+
+.header-booking__item span::after {
+    top: -4px;
+}
+
+.header-booking__select::after {
+    top: 10px;
+}
+
+.parallax {
+    /* The image used */
+    background-image: url("/images/room/room-07.jpg");
+    min-height: 300px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.rooms-banner__group {
+    position: relative;
+    top: -70px;
+}
+
+.rooms-banner__title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+    width: 100%;
+}
+
+.rooms-banner__title p {
+    font-family: "Quicksand";
+}
+
+.rooms-banner__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #1a1a1a6b;
+}
+
+.rooms-detail {
+    margin-top: -45px;
+    border-bottom: 1px solid #d7dadd;
+}
+
+.rooms-detail__item {
+    font-family: "Quicksand";
+    text-align: center;
+}
+
+.rooms-detail__item h2 {
+    font-size: 12px;
+}
+
+.rooms-detail__item p {
+    font-size: 14px;
+    color: #5c6476;
+}
+
+.rooms-detail__block {
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+}
+
+.rooms-detail__block p {
+    margin-bottom: 0;
+    font-family: "Quicksand";
+    color: #5c6476;
+}
+
+.rooms-detail__block button {
+    color: #fff;
+    padding: 10px;
+    border: none;
+    background-color: #0b3d24;
+    -webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+    font-size: 16px;
+    line-height: 20px;
+    font-family: "Quicksand";
+}
+
+.rooms-detail__block button:hover {
+    background-color: #000;
+}
+
+.rooms-detail__block h2 {
+    font-size: 26px;
+}
+
+.rooms-detail__block-item {
+    background-color: #fff;
+    padding: 10px 50px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.rooms-desc {
+    font-family: "Quicksand";
+    text-align: center;
+    font-size: 20px;
+    max-width: 800px;
+    margin: auto;
+    padding: 50px 0;
+}
+
+.rooms-slide {
+    max-width: 1300px;
+    margin: auto;
+    padding-bottom: 30px;
+}
+
+.rooms-slide img {
+    width: 100%;
+}
+
+.rooms-slide .slick-dots li button:before {
+    content: "";
+}
+
+.rooms-slide .slick-dots {
+    bottom: 25px;
+}
+
+.rooms-slide .slick-dots li {
+    width: 90px;
+}
+
+.rooms-slide .slick-dots li.slick-active button {
+    background-color: #fff;
+    height: 3px;
+    width: 100%;
+}
+
+.rooms-slide .slick-dots li button {
+    background-color: #ffffff40;
+    height: 2px;
+    width: 100%;
+    padding: 0;
+}
+
+.rooms-slide li.slick-active {
+    background-color: #fff;
+    height: 1px;
+}
+
+.rooms-view img {
+    width: 100%;
+}
+
+.rooms-view h1 {
+    font-size: 28px;
+    padding-top: 15px;
+}
+
+.rooms-view ul {
+    font-family: "Quicksand";
+}
+
+.rooms-view ul li {
+    padding-bottom: 10px;
+}
+
+.rooms-view ul li::before {
+    content: "✢";
+    padding-right: 5px;
+}
+
+.rooms-view .col-md-6 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spa img {
+    width: 100%;
+}
+
+.spa h1 {
+    font-size: 28px;
+    padding-top: 15px;
+}
+
+.spa__icons-item {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 25%;
+    float: left;
+    padding: 15px 0;
+}
+
+.spa__icons-item svg {
+    font-size: 40px;
+    color: #0b3d24;
+}
+
+.spa__icons-item span {
+    font-size: 13px;
+    color: #0b3d24;
+}
+
+.spa p {
+    font-family: "Quicksand";
+}
+
+.spa .col-md-6 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.offers__title {
+    text-align: center;
+    padding: 50px 0 30px;
+}
+
+.offers h1 {
+    font-size: 36px;
+}
+
+.offers span {
+    font-family: "Quicksand";
+    font-size: 12px;
+}
+
+.offers-slide {
+    background-image: url("/images/room/room-13.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 30px 10px;
+}
+
+.offers-slide__item img {
+    width: 100%;
+}
+
+.offers-slide h1 {
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.offers-slide span {
+    font-size: 9px;
+    font-family: "Quicksand";
+    color: #8d929d;
+}
+
+.offers-slide p,
+.offers-slide ul li {
+    font-size: 11px;
+    font-family: "Quicksand";
+    line-height: 16px;
+}
+
+.offers-slide p {
+    margin-bottom: 0;
+}
+
+.offers-slide__desc {
+    background-color: #fff;
+    padding: 20px;
+}

@@ -1,0 +1,126 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+    Hotel detailHotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
+    Article article = ViewBag.ArticleByRoomRate ?? new Article();
+}
+
+<div id="outerafterheader">
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns" id="afterheader">
+                <h1 class="pagetitle nodesc">@menu.Title</</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="outermain">
+    <div id="maincontainer">
+        <div class="container">
+            <div class="row">
+                <section id="maincontent">
+                    <section id="content" class="twelve columns">
+                        <div id="ts-portfolio">
+                            <div class="row ">
+                                <section class="single content-detail">
+                                    <section class="eight columns positionleft">
+                                        <article class="post">
+                                            <div class="articlecontainer">
+                                                <div class="entry-content" style="padding-top: 20px;">
+                                                    <div>
+                                                        <h2>@article.Title</h2>
+                                                        @Html.Raw(article.Content)
+                                                    </div>
+                                                    <div>
+                                                        <div id="div_id" style="height: 450px; width: 100%; margin-top: 20px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <div class="clear"></div>
+                                        <!-- end post -->
+                                    </section>
+
+                                    <section>
+                                        <aside id="sidebar" class="four columns positionright">
+                                            @Html.Partial("SideBar")
+                                        </aside>
+                                    </section>
+                                    <div class="clear"></div>
+                                </section>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj7R94fdqMXP-lPbFGATZBFS_7VMirJ8Q&sensor=true&libraries=places" async defer></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        initialize();
+    });
+    var map;
+    var html = "<div style='cursor: default; width: 564px; height: 158px; z-index: -356;'>" +
+        "<div style='position: absolute; left: 0px; top: 0px;'>" +
+        "<div style='width: 0px; height: 0px; border-right-width: 10px; border-right-style: solid; border-right-color: transparent; border-left-width: 10px; border-left-style: solid; border-left-color: transparent; border-top-width: 24px; border-top-style: solid; border-top-color: rgba(0, 0, 0, 0.0980392); position: absolute; left: 283px; top: 165px;'></div>" +
+        "<div style='position: absolute; left: 28px; top: 0px; width: 564px; height: 158px;'></div><div style='border-top-width: 24px; position: absolute; left: 282px; top: 166px;'><div style='position: absolute; overflow: hidden; left: -6px; top: -1px; width: 16px; height: 30px;'><div style='position: absolute; left: 6px; background-color: rgb(255, 255, 255); -webkit-transform: skewX(22.6deg); -webkit-transform-origin: 0px 0px; height: 24px; width: 10px; box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 6px;'></div></div><div style='position: absolute; overflow: hidden; top: -1px; left: 10px; width: 16px; height: 30px;'><div style='position: absolute; left: 0px; background-color: rgb(255, 255, 255); -webkit-transform: skewX(-22.6deg); -webkit-transform-origin: 10px 0px; height: 24px; width: 10px; box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 6px;'></div>" +
+        "</div>" +
+        "</div>" +
+        "<div style='position: absolute; left: 1px; top: 1px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; background-color: rgb(255, 255, 255); width: 562px; height: 156px;'></div>" +
+        "</div>" +
+        "<div class='gm-style-iw' style='position: absolute; left: 12px; top: 9px; overflow: auto; width: 520px; height: 140px;'>" +
+        "<div class=style='overflow: auto;'><div style='display:block;width: 168px;height: 140px;float: left;'>" +
+        "<a href='/' target='_blank'><img alt='Littel Hanoi Hotels' src='@detailHotel.Image' style='float:left; height:101px; margin-left:10px; margin-right:10px; width:148px;'></a></div>" +
+        "<div style='width:520px;display:block'><p><span style='color:#B22222'><strong style='font-family: &quot;trajan pro&quot;;letter-spacing: 3px;'>@detailHotel.Name.ToUpper()</strong></span></p><p style='margin-top:-4px'>" +
+        "<span style='line-height:1.6em'><strong>Add:</strong> @detailHotel.Address</span><br>" +
+        "<span style='line-height:1.6em'><strong>Tel:</strong> @detailHotel.Tel</span><br>" +
+        "<span style='line-height:1.6em'><strong>Email:</strong> @detailHotel.Email</span></p></div>" +
+        "</div><div>" +
+        "</div>";
+    function initialize() {
+        var hotel_1 = new google.maps.LatLng(@detailHotel.Location);
+        var myOptions = {
+            zoom: 16,
+            center: hotel_1,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("div_id"), myOptions);
+        var text = html;
+        var infohotel_1 = new google.maps.InfoWindow(
+            {
+                content: text,
+                size: new google.maps.Size(100, 50),
+                position: hotel_1
+            });
+        infohotel_1.open(map);
+        //
+        var marker = new google.maps.Marker({
+            position: hotel_1,
+            map: map,
+            title: "Title"
+        });
+
+    }
+</script>
+<style>
+    .gm-style div, .gm-style span, .gm-style label, .gm-style a {
+       font-size:12px;
+            font-family: verdana, helvetica, sans-serif;
+            -webkit-text-size-adjust: none;
+            color: #333333;
+    }
+    .gm-style-iw {
+        overflow: inherit!important;
+    }
+</style>

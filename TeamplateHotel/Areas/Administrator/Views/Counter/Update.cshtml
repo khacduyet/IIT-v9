@@ -1,0 +1,156 @@
+﻿@using ProjectLibrary.Config
+@model TeamplateHotel.Areas.Administrator.EntityModel.ECounter
+@{
+    ViewBag.Title = "Cập nhật bộ đếm";
+    Layout = "~/Areas/Administrator/Views/Templates/_LayoutPage.cshtml";
+}
+
+<div class="span12">
+    <div class="widget ">
+        <div class="widget-header">
+            <i class=" icon-plus-sign"></i>
+            <h3>@ViewBag.Title</h3>
+        </div> <!-- /widget-header -->
+
+        <div class="widget-content">
+            @Html.ValidationSummary(true)
+            @using (Html.BeginForm("Update", "Counter", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(c => c.ID)
+                <div class="control-group">
+                    <label class="control-label" for="Content"><span class="asterisk">*</span></label>
+                    <div class="controls" id="ContentBenefits" style="height: 200px; width: 80%; overflow-y: scroll; border: 1px solid #000; border-radius: 5px">
+                        @if (Model.Counter != "" && Model.Counter != null)
+                        {
+                            string[] arr = Model.Counter.Split('|').ToArray();
+                            foreach (var item in arr)
+                            {
+                                var counter = item.Split('~').ToArray();
+                                //int pos = Array.IndexOf(counter, "");
+                                //if (pos == -1)
+                                //{
+                                <div class='control-group' style='position: relative;'>
+                                    <label class='label'>Bộ đếm</label>
+                                    Tiêu đề &nbsp;<input class='span2 inputbox' name='title' type='text' value='@counter[0]'>&nbsp;&nbsp;
+                                    Số lượng &nbsp;<input class='span2 inputbox' name='quantity' type='number' value='@counter[1]'>
+                                    Mô tả &nbsp;<input class='span2 inputbox' name='desc' type='text' value='@counter[2]'>
+                                    <button type='button' onclick='remove(this)' style='position: absolute; right: 0;'><i class='icon-remove'></i></button>
+                                </div>
+                                //}
+                            }
+                        }
+                        else
+                        {
+                            <h2>Chưa có bộ đếm nào được đặt cho phòng này?</h2>
+                        }
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.ValidationMessageFor(c => c.Counter)
+                    <div class="controls">
+                        <button id="addBenefit" type="button">Thêm bộ đếm</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(c => c.Image, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.Image, new { @class = "span4 inputbox upload" })
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Title">Tiêu đề<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.TitleButton, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.TitleButton)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Title">Link ra ngoài<span class="asterisk">*</span></label>
+                    <div class="controls">
+                        @Html.CheckBoxFor(c => c.External)
+                        @Html.ValidationMessageFor(c => c.External)
+                    </div>
+                </div>
+
+                <div class="control-group" id="linkOutSide">
+                    <label class="control-label" for="Title">Đường dẫn link</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.ExternalPath, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.ExternalPath)
+                    </div>
+                </div>
+
+                <div class="control-group" id="MenuIndex">
+                    @Html.LabelFor(c => c.menuId, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownListFor(c => c.menuId, new SelectList(ViewBag.ListParentMenu, "Value", "Text"), new { @class = "span3" })
+                        @Html.ValidationMessageFor(c => c.menuId)
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                    <a href="@Url.Action("Index","Counter")" class="btn">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        AutoAlias('Title', 'Alias');
+        bindUl();
+        if ($("#Type").val() == 9) {
+            $(".linkoutsite").show();
+        } else {
+            $(".linkoutsite").hide();
+        }
+
+        $("#Type").change(function () {
+            if ($(this).val() == 9) {
+                $(".linkoutsite").show();
+            } else {
+                $(".linkoutsite").hide();
+            }
+        });
+        checked();
+        $("#External").change(function () {
+            checked();
+        });
+
+        $("#addBenefit").click(function () {
+            var str = "<div class='control-group' style='position: relative;'>";
+            str += "<label class='label'>Bộ đếm</label>";
+            str += "Tiêu đề &nbsp;<input class='span2 inputbox' name='title' type='text' value=''>&nbsp;&nbsp;";
+            str += "Số lượng &nbsp;<input class='span2 inputbox' name='quantity' type='number' value=''>";
+            str += "Mô tả &nbsp;<input class='span2 inputbox' name='desc' type='text' value=''>";
+            str += "<button type='button' onclick='remove(this)' style='position: absolute; right: 0;'><i class='icon-remove'></i></button>";
+            str += "</div>";
+            $("#ContentBenefits").append(str);
+            $("#ContentBenefits").find("h2").remove();
+        });
+    });
+
+    function checked() {
+        var checkLink = $("#External").is(":checked");
+        if (checkLink == false) {
+            $("#linkOutSide").attr("hidden", "hidden");
+            $("#MenuIndex").removeAttr("hidden");
+        } else {
+            $("#MenuIndex").attr("hidden", "hidden");
+            $("#linkOutSide").removeAttr("hidden");
+        }
+    }
+
+    function remove(element) {
+        var getParent = $(element).parent().remove();
+        var c = $("#ContentBenefits").find(".control-group");
+        if (c.length == 0) {
+            $("#ContentBenefits").append("<h2>Chưa có bộ đếm nào được đặt cho phòng này?</h2>");
+        }
+    };
+</script>

@@ -1,0 +1,497 @@
+/*! CSS Used from: http://www.nicdarkthemes.com/themes/resort/wp/demo/apartment/wp-content/plugins/nd-booking/assets/css/style.css?ver=5.2 ; media=all */
+
+@media all {
+    .nd_booking_section {
+        float: left;
+        width: 100%;
+    }
+    .nd_booking_width_100_percentage {
+        width: 100%;
+    }
+    .nd_booking_width_50_percentage {
+        width: 50%;
+    }
+    .nd_booking_height_30 {
+        height: 10px;
+    }
+    .nd_booking_height_10 {
+        height: 10px;
+    }
+    .nd_booking_height_5 {
+        height: 0px;
+    }
+    .nd_booking_height_1 {
+        height: 1px;
+    }
+    .nd_booking_height_0_important {
+        height: 0px !important;
+    }
+    .nd_booking_float_left {
+        float: left;
+    }
+    .nd_booking_float_right {
+        float: right;
+    }
+    .nd_booking_padding_0_important {
+        padding: 0px !important;
+    }
+    .nd_booking_padding_30 {
+        padding: 10px 0 0;
+    }
+    .btn-block {
+        border-top: 0;
+        border-bottom: 0;
+        border-radius: 3px;
+        text-transform: uppercase;
+        padding: 7px;
+        background-color: #153E49;
+        color: #FFF;
+        margin-bottom: 15px;
+    }
+    .nd_booking_margin_top_7 {
+        margin-top: 7px;
+    }
+    .nd_booking_margin_top_20 {
+        margin-top: 20px;
+    }
+    .nd_booking_margin_left_10 {
+        margin-left: 10px;
+    }
+    .nd_booking_font_size_50 {
+        font-size: 60px;
+        line-height: 50px;
+        color: #03254c;
+        /* font-family: Roboto-Regular; */
+        /* font-weight: bold; */
+        font-family: fontnumber;
+    }
+    .nd_booking_font_size_12 {
+        font-size: 14px;
+        line-height: 19.6px;
+        color: #03254c;
+        font-family: Roboto-Regular;
+        margin: auto;
+    }
+    .nd_booking_letter_spacing_2 {
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+        color: #03254c;
+        text-transform: uppercase;
+        font-family: Roboto-Regular;
+        font-weight: bold;
+    }
+}
+
+h6#nd_booking_date_month_to_front {
+    width: 50%;
+    text-align: right;
+    padding-right: 6px;
+}
+
+h6#nd_booking_date_month_from_front {
+    width: 50%;
+    text-align: right;
+    padding-right: 6px;
+}
+
+.nd_booking_font_weight_lighter {
+    font-weight: lighter;
+}
+
+.nd_booking_white_space_normal {
+    white-space: normal;
+}
+
+.nd_booking_line_height_18 {
+    line-height: 18px;
+}
+
+.nd_booking_bg_greydark {
+    background-color: #1c1c1c;
+}
+
+.nd_booking_text_align_center {
+    text-align: center;
+}
+
+.nd_booking_text_align_right {
+    text-align: right;
+}
+
+.nd_booking_border_width_0_important {
+    border-width: 0px !important;
+}
+
+.nd_booking_display_none {
+    display: none;
+}
+
+.nd_booking_display_inline_flex {
+    display: inline-flex;
+}
+
+.nd_booking_position_relative {
+    position: relative;
+}
+
+.nd_booking_position_absolute {
+    position: absolute;
+}
+
+.nd_booking_left_0 {
+    left: 0px;
+}
+
+.nd_booking_top_0 {
+    top: 0px;
+}
+
+.nd_booking_right_0 {
+    right: 0px;
+}
+
+.nd_booking_box_sizing_border_box {
+    box-sizing: border-box;
+}
+
+.nd_booking_cursor_pointer {
+    cursor: pointer;
+}
+
+.nd_booking_border_1_solid_grey {
+    border: 1px solid #f1f1f1;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+    .nd_booking_width_100_percentage_all_iphone {}
+    .nd_booking_display_none_all_iphone {
+        display: none;
+    }
+}
+
+
+/*! CSS Used from: http://www.nicdarkthemes.com/themes/resort/wp/demo/apartment/wp-content/plugins/nd-shortcodes/css/style.css?ver=5.2 ; media=all */
+
+@media all {
+    .nd_options_color_white {
+        color: #fff !important;
+    }
+    .nd_options_border_bottom_1_solid_grey {
+        border-bottom: 1px solid #f1f1f1;
+    }
+}
+
+
+/*! CSS Used from: http://www.nicdarkthemes.com/themes/resort/wp/demo/apartment/wp-content/uploads/sites/4/js_composer/js_composer_front_custom.css?ver=5.7 ; media=all */
+
+@media all {
+    .vc_column_container {
+        width: 100%;
+    }
+    .vc_col-sm-4 {
+        position: relative;
+        min-height: 1px;
+        padding-left: 15px;
+        padding-right: 15px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    @media (min-width: 1200px) {
+        .vc_col-sm-4 {
+            float: left;
+        }
+        .vc_col-sm-4 {
+            width: 33.33333333%;
+        }
+    }
+    .vc_parallax>* {
+        position: relative;
+        z-index: 1;
+    }
+    .vc_column-inner::before,
+    .vc_column-inner::after {
+        content: " ";
+        display: table;
+    }
+    .vc_column-inner::after {
+        clear: both;
+    }
+    .vc_column_container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .vc_column_container>.vc_column-inner {
+        box-sizing: border-box;
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 100%;
+    }
+    .vc_row-has-fill>.vc_column_container>.vc_column-inner {
+        padding-top: 0px;
+    }
+}
+
+
+/*! CSS Used from: Embedded */
+
+.nd_booking_bg_greydark {
+    background-color: #03254c;
+}
+
+.nd_options_customizer_fonts .nd_options_color_greydark,
+.nd_options_customizer_fonts h1,
+.nd_options_customizer_fonts h2,
+.nd_options_customizer_fonts h3,
+.nd_options_customizer_fonts h5,
+.nd_options_customizer_fonts h6 {
+    color: #525252;
+}
+
+.nd_options_customizer_fonts .nd_options_color_grey,
+.nd_options_customizer_fonts p,
+.nd_options_customizer_fonts label,
+.nd_options_customizer_fonts input {
+    color: #7e7e7e;
+}
+
+
+/*! CSS Used from: Embedded */
+
+.nd_options_customizer_forms input[type="text"],
+.nd_options_customizer_forms input[type="number"] {
+    background-color: #f9f9f9;
+    border-width: 1px;
+    border-color: #f1f1f1;
+    border-radius: 3px;
+    border-style: solid;
+    padding: 10px 20px;
+    -webkit-appearance: none;
+    color: #7e7e7e;
+}
+
+.nd_options_customizer_forms input[type="text"]::-webkit-input-placeholder,
+.nd_options_customizer_forms input[type="number"]::-webkit-input-placeholder {
+    color: #7e7e7e;
+}
+
+
+/*! CSS Used from: Embedded */
+
+.nd_options_customizer_forms input[type="submit"] {
+    background-color: 153E49;
+    border-width: 0px;
+    border-color: 153E49;
+    border-radius: 3px;
+    border-style: solid;
+    padding: 10px 20px;
+    -webkit-appearance: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.nd_booking_search_component_l2 {
+    border-width: 0px;
+}
+
+.nd_booking_search_component_l2 .nd_booking_font_size_12 {
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.nd_booking_search_component_l2 form .nd_booking_bg_greydark {
+    background: none;
+}
+
+.nd_booking_search_component_l2 form input[type="submit"] {
+    letter-spacing: 4px;
+    font-size: 11px;
+    line-height: 11px;
+    border-radius: 2px;
+}
+
+
+/*! CSS Used from: Embedded */
+
+.search-l2-home1>div {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.search-l2-home1>div h2 {
+    color: #525252 !important;
+}
+
+.search-l2-home1>div p {
+    color: #7e7e7e !important;
+}
+
+.ui-datepicker {
+    background-color: #fff;
+}
+
+.ui-datepicker .ui-datepicker-header {
+    background-color: #fff;
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.nd_options_customizer_fonts a {
+    color: #7e7e7e;
+}
+
+.ui-datepicker .ui-datepicker-title span {
+    margin: 0px;
+    line-height: 20px;
+    text-align: center;
+    color: #000;
+    font-weight: lighter;
+}
+
+
+/*! CSS Used from: Embedded */
+
+a {
+    font-weight: lighter;
+}
+
+.nicdark_body .ui-datepicker .ui-datepicker-prev span,
+.nicdark_body .ui-datepicker .ui-datepicker-next span {
+    color: #fff !important;
+}
+
+.nicdark_body .ui-datepicker th {
+    color: #fff;
+}
+
+.nicdark_body .ui-datepicker td span,
+{
+    color: #fff !important;
+}
+
+.nicdark_body #ui-datepicker-div {
+    border: 1px solid #0000001a;
+}
+
+
+/*! CSS Used from: http://www.nicdarkthemes.com/themes/resort/wp/demo/apartment/wp-content/plugins/nd-booking/assets/css/jquery-ui-datepicker.css?ver=5.2 ; media=all */
+
+@media all {
+    span.ui-icon.ui-icon-circle-triangle-w,
+    span.ui-icon.ui-icon-circle-triangle-e {
+        color: #000;
+        display: none
+    }
+    .ui-datepicker .ui-datepicker-header a::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px
+    }
+    .ui-datepicker .ui-datepicker-header .ui-datepicker-prev::before {
+        content: "\2039";
+    }
+    .ui-datepicker .ui-datepicker-header .ui-datepicker-next::before {
+        content: "\203A";
+    }
+    .ui-datepicker {
+        width: 300px;
+        padding: 0px;
+        display: none;
+        border: 1px solid #88888840;
+    }
+    .ui-datepicker .ui-datepicker-header {
+        position: relative;
+        padding: 15px 10px;
+    }
+    .ui-datepicker .ui-datepicker-prev,
+    .ui-datepicker .ui-datepicker-next {
+        position: absolute;
+        border: 1px solid #f3f3f3;
+    }
+    .ui-datepicker .ui-datepicker-prev {
+        left: 15px;
+        top: 25px;
+    }
+    .ui-datepicker .ui-datepicker-next {
+        right: 58px;
+        top: 25px;
+    }
+    /* .ui-datepicker .ui-datepicker-prev span,
+  .ui-datepicker .ui-datepicker-next span {
+    display: block;
+    position: absolute;
+    left: 0%;
+    margin-left: 0px;
+    top: 50%;
+    margin-top: -7px;
+    color: white;
+    padding: 2px 5px;
+    font-size: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: lighter;
+    letter-spacing: 2px;
+    line-height: 10px;
+  } */
+    .ui-datepicker .ui-datepicker-title {
+        margin: 0px;
+        line-height: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: #fff;
+        font-weight: lighter;
+    }
+    .ui-datepicker table {
+        width: 100%;
+        font-size: 0.9em;
+        border-collapse: collapse;
+        margin: 0 0 0.4em;
+    }
+    .ui-datepicker th {
+        padding: 0px;
+        text-align: center;
+        font-weight: lighter;
+        border: 0;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #fff;
+    }
+    .ui-datepicker td {
+        border: 0;
+        padding: 5px;
+    }
+    .ui-datepicker td span,
+    .ui-datepicker td a {
+        display: block;
+        padding: 0px;
+        text-align: center;
+        text-decoration: none;
+        font-weight: lighter;
+        font-size: 12px;
+        color: #153E49;
+    }
+    .ui-datepicker-today a {
+        color: #fff !important;
+    }
+    .ui-datepicker a {
+        color: #fff;
+    }
+    .ui-datepicker-unselectable.ui-state-disabled {
+        opacity: 0.3;
+    }
+}
+
+.ui-datepicker table tr td:not(.ui-datepicker-unselectable):hover {
+    color: #fff;
+    background-color: 153E49;
+}
+
+.ui-datepicker table tr td a {
+    padding: 10px !important;
+}
+
+.ui-datepicker-today {
+    background-color: 153E49;
+}

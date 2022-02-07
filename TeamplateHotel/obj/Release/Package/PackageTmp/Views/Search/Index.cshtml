@@ -1,0 +1,72 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using PagedList.Mvc
+@model  List<Room>
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var lang = Request.Cookies["LanguageID"].Value;
+    Menu menu = ViewBag.Menu ?? new Menu();
+    List<Menu> menuChild = CommentController.getMenuChild(lang, menu.ID);
+}
+@Html.Partial("PartialView/_CheckRoom")
+<main>
+    <section class="service service_rooms-list">
+        <div class="service__rooms">
+            <div class="rooms__list">
+                <div class="container-fluid">
+                    <div class="row no-gutter" style="box-shadow: 0 1px 8px 1px #2326331f">
+                        @if (Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <div class="col-12 col-md-6 col-lg-4 p-2">
+                                    <div class="rooms__list-item">
+                                        <img src="@item.Image" alt="home list image">
+                                        <div class="rooms__list-booking-center">
+                                            <div class="rooms__list-booking">
+                                                <a href="/@item.MenuAlias/@item.ID/@item.Alias">
+                                                    <h1>@item.Title</h1>
+                                                </a>
+                                                <a href="/@item.MenuAlias/@item.ID/@item.Alias">
+                                                    <h3>@item.Bed</h3>
+                                                </a>
+                                                <p class="responsive over-text">
+                                                    @Html.Raw(item.Description)
+                                                </p>
+                                                <div class="rooms__list-price">
+                                                    <div class="rooms__list-price-text">
+                                                        <span>
+                                                            @GetLanguage.Language(lang, "Price"):
+                                                            <span class="price">@(((double)item.Price).ToString("N0")) @GetLanguage.Language(lang, "money")</span> / @GetLanguage.Language(lang, "Day")
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <a href="/@item.MenuAlias/@item.ID/@item.Alias">
+                                                    <button class="button">
+                                                        @GetLanguage.Language(lang, "Details")<div class="button__horizontal"></div>
+                                                        <div class="button__vertical"></div>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="rooms__list-name">@item.Title</div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="container">
+                                <h2>@GetLanguage.Language(lang, "NotResult")</h2>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+    @Html.Partial("PartialView/_BookingNow")
+</main>s

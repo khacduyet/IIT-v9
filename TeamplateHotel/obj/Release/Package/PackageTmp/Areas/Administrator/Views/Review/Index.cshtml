@@ -1,0 +1,131 @@
+﻿@using ProjectLibrary.Database
+@model Review
+
+@{
+    Layout = "~/Areas/Administrator/Views/Templates/_LayoutPage.cshtml";
+}
+
+<div id="jtable-main-container"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#jtable-main-container').jtable({
+            title: '@ViewBag.Title',
+            paging: true, //Enable paging
+            pageSize: 30, //Set page size (default: 10)
+            sorting: true, //Enable sorting
+            defaultSorting: 'Name ASC', //Set default sorting
+            selecting: true, //Enable selecting
+            multiselect: true, //Allow multiple selecting
+            selectingCheckboxes: true, //Show checkboxes on first column
+            columnResizable: true, //Actually, no need to set true since it's default
+            columnSelectable: true, //Actually, no need to set true since it's default
+            saveUserPreferences: true, //Actually, no need to set true since it's default
+            toolbar: {
+                @*items: [{
+                    icon: '/Areas/Administrator/Content/img/add.png',
+                    text: 'Thêm mới',
+                    click: function () {
+                        window.location = '@Url.Action("Create", "Article")';
+                    }
+                }, {
+                    icon: '/Areas/Administrator/Content/img/Ordering.png',
+                    text: 'Sắp xếp',
+                    click: function () {
+                        $("#updateIndex").submit();
+                    }
+                }]*@
+            },
+            actions: {
+                listAction: '@Url.Action("List", "Review")',
+                createAction: '@Url.Action("Create", "Review")',
+                updateAction: '@Url.Action("Edit", "Review")',
+                deleteAction: '@Url.Action("Delete", "Review")',
+            },
+            fields: {
+                Id: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                FullName: {
+                    title: '@Html.DisplayNameFor(u => u.FullName)',
+                    width: '13%',
+                    display: function (data) {
+                        return data.record.FullName;
+                    }
+                },
+                Comment: {
+                    title: 'Comment',
+                    width: '8%',
+                    sorting: false,
+                    type: 'textarea',
+                    display: function (data) {
+                        return data.record.Comment;
+                    }
+                },
+                Status: {
+                    title: '@Html.DisplayNameFor(c => c.Status)',
+                    width: '8%',
+                    type: 'checkbox',
+                    values: { 'false': 'Không Hiển thị', 'true': 'Hiển thị' },
+                    defaultValue: 'true',
+                    display: function (data) {
+                        function gettext(check, id) {
+                            if (check) {
+                                $("#Status_" + id).prop('checked', true);
+                                return "Hiển Thị";
+                            }
+                            else
+                                return "Không Hiển Thị";
+                        };
+                        function getCheked(check) {
+                            if (check) {
+                                return "checked";
+                            }
+                        };
+                        return '<input title="Edit" id="Status_' + data.record.Id + '" ' + getCheked(data.record.Status) + ' type="checkbox" value="' + data.record.Status + '" onclick="Approved(' + data.record.Id + ',' + data.record.Status + ')" /> <span id="mess_' + data.record.Id + '">' + gettext(data.record.Status, data.record.Id) + '</span>';
+                    }
+                },
+                Position: {
+                    title: 'Position',
+                    width: '8%',
+                    sorting: false,
+                    list: false,
+                    display: function (data) {
+                        return data.record.Position;
+                    }
+                },
+                Image: {
+                    title: 'Image',
+                    width: '8%',
+                    sorting: false,
+                    list: false,
+                    inputClass: 'upload',
+                    display: function (data) {
+                        return ' <img src="' + data.record.Image + '" width="80px" height="60px"/>';
+                    },
+                },
+            }
+        });
+        $('#jtable-main-container').jtable('load');
+    });
+</script>
+
+<script>
+    $("#Status").change(function () {
+        $('#jtable-main-container').jtable('load', { Pending: $("#Status").val() });
+    });
+    function Approved(_id, _val) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Approved","Review")',
+            dataType: 'json',
+            data: { id: _id, val: _val },
+            success: function (data) {
+                CreateMessage(data.Result);
+                $('#jtable-main-container').jtable('load');
+            }
+        });
+    }
+</script>

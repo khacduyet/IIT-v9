@@ -1,0 +1,84 @@
+﻿@using TeamplateHotel.Handler
+@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@model TeamplateHotel.Models.DetailRoom
+
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+    var lang = Request.Cookies["LanguageID"].Value;
+    Hotel detailHotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
+    int count = 0;
+    ViewBag.RoomOther = GetLanguage.Language(lang, "Room other");
+}
+
+<section class="rooms-details">
+    <div class="container">
+        <div class="details_rooms">
+            <div class="">
+                <div class="owl-detai-room owl-carousel owl-theme">
+                    @foreach (var item in Model.RoomGalleries)
+                    {
+                        <div class="item" data-hash="zero">
+                            <img src="@item.ImageLarge" alt="">
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+        <div class="content">
+
+            <div class="section-title">
+                <h3>@Model.Room.Title</h3>
+                <div class="price">
+                    @GetLanguage.Language(lang, "Price"): @GetLanguage.Language(lang, "money") @(((double)Model.Room.Price).ToString("N0")) / @GetLanguage.Language(lang, "Day")
+                </div>
+            </div>
+            <div class="desc">
+
+                <p>
+                    @Html.Raw(Model.Room.Content)
+
+                </p> <br>
+                @if (Model.Room.Utilities != null && Model.Room.Utilities != "")
+                {
+                    string[] arr = Model.Room.Utilities.Split('|').ToArray();
+                    <div class="service">
+                        <h3>
+                            @GetLanguage.Language(lang, "Convenient")
+                        </h3>
+                        <p>
+                            @Html.Raw(Model.Room.ContentUtilities)
+                        </p>
+                        <ul class="info clearfix">
+                            @foreach (var item in arr)
+                            {
+                                string[] i = item.Split('~').ToArray();
+                                string icon = i[0].ToString();
+                                string util = i[1].ToString();
+                                <li>@Html.Raw(icon) @util</li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+            <div class="mt-5 text-center">
+                <div class="details">
+                    @*<a href="/Booking/@Model.Room.ID/@Model.Room.Alias" class="btn-book">
+                            @GetLanguage.Language(lang, "Book Now")
+                            <i class="fal fa-angle-double-right"></i> <span> </span>
+                        </a>*@
+                    <a href="https://booking-guarantee.com/Home/SelectDate?hotelKey=IIT&lang=en&currency=USD" class="btn-book">
+                        @GetLanguage.Language(lang, "Book Now")
+                        <i class="fal fa-angle-double-right"></i> <span> </span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@Html.Partial("PartialView/_RoomOther", Model.Rooms)

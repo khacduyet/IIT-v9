@@ -1,0 +1,46 @@
+﻿@using TeamplateHotel.Controllers
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using ProjectLibrary.Database
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Hotel hotel = CommentController.DetailHotel(lang);
+    EAbout ab = CommentController.getAbout(lang);
+}
+<section>
+    <div class="section">
+        <div class="details-article about_us">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="section-title">
+                            <h3>@ab.Title</h3>
+                            <div class="desc">
+                                @ab.Description
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="content">
+                            @*<iframe width="100%" height="315" src="https://www.youtube.com/embed/caCGwBg-c-4?controls=0&amp;start=10" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>*@
+                            <img src="@ab.Image" alt="">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7">
+                        
+                    </div>
+                    <div class="col-md-5">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,155 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using ProjectLibrary.Config
+@using TeamplateHotel.Models
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Hotel detailHotel = CommentController.DetailHotel(lang);
+    List<Language> languages = CommentController.GetLanguages();
+    List<Slider> sliders = CommentController.GetListSlider(lang, 0);
+    List<Menu> menus = CommentController.GetMainMenus(lang);
+    Menu menu = ViewBag.Menu ?? new Menu();
+    var alias = "";
+}
+<div class="header">
+    <div class="header__top">
+        <div class="container text-right">
+            <div class="header__contact"><a href="tel:@detailHotel.Tel"><i class="fas fa-phone-alt mr-2"></i>@detailHotel.Tel</a></div>
+            <ul class="header__social">
+                <li><a href="@detailHotel.Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="@detailHotel.Twitter"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="@detailHotel.Youtube"><i class="fab fa-youtube"></i></a></li>
+                <li><a href="@detailHotel.Instagram"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+            <div class="lang-menu">
+                <span class="lang-menu_icon">@lang.ToUpper()<i class="far fa-angle-down ml-2"></i></span>
+                @foreach (var item in languages)
+                {
+                    if (item.ID != Request.Cookies["LanguageID"].Value)
+                    {
+                        <div class="lang-menu_drop"><a class="dropdown-item" href="/SelectLanguge/@item.ID"><span>@item.Name.ToUpper()</span></a></div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="header__main">
+        <div class="container">
+            <div class="header__box">
+                <div class="nav-icon"><i class="fas fa-align-left"></i></div>
+                <div class="header__logo"><a href="/"><img src="@detailHotel.Logo" alt="logo"></a></div>
+                <nav class="header__nav d-none d-lg-block">
+                    <ul class="nav-list">
+                        @{
+                            var mnu = menus.Where(a => a.ParentID == 0).OrderBy(a => a.Index).ToList();
+                        }
+                        @foreach (var item in mnu)
+                        {
+                            var menuChilds = menus.Where(a => a.ParentID == item.ID).OrderBy(a => a.Index).ToList();
+                            if (menuChilds.Count > 0)
+                            {
+                                alias = "javascript:void(0)";
+                                <li class="nav__item dropdown">
+                                    <a href="/@item.Alias">@item.Title<i class="far fa-angle-down"></i></a>
+                                    <ul class="nav__child">
+                                        @foreach (var itemChild in menuChilds)
+                                        {
+                                            if (itemChild.Type == SystemMenuType.OutSite)
+                                            {
+                                                <li>
+                                                    <a href="@itemChild.Link" class="nav__link">@itemChild.Title</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a href="/@itemChild.Alias" class="nav__link">@itemChild.Title</a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            else if (item.Type == SystemMenuType.Home)
+                            {
+                                <li class="nav__item">
+                                    <a href="/">@item.Title</a>
+                                </li>
+                            }
+                            else
+                            {
+                                if (item.Type == SystemMenuType.OutSite)
+                                {
+                                    <li class="nav__item">
+                                        <a href="@item.Link">@item.Title</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav__item">
+                                        <a href="/@item.Alias">@item.Title</a>
+                                    </li>
+                                }
+                            }
+                        }
+                    </ul>
+                </nav>
+                <div class="nav-mobile d-block d-lg-none">
+                    <ul class="menu-mobile">
+                        @foreach (var item in mnu)
+                        {
+                            var menuChilds = menus.Where(a => a.ParentID == item.ID).OrderBy(a => a.Index).ToList();
+                            if (menuChilds.Count > 0)
+                            {
+                                alias = "javascript:void(0)";
+                                <li class="nav__item dropdown">
+                                    <a href="/@item.Alias">@item.Title<i class="far fa-angle-down"></i></a>
+                                    <ul class="nav__child">
+                                        @foreach (var itemChild in menuChilds)
+                                        {
+                                            if (itemChild.Type == SystemMenuType.OutSite)
+                                            {
+                                                <li>
+                                                    <a href="@itemChild.Link" class="nav__link">@itemChild.Title</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a href="/@itemChild.Alias" class="nav__link">@itemChild.Title</a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            else if (item.Type == SystemMenuType.Home)
+                            {
+                                <li class="nav__item">
+                                    <a href="/">@item.Title</a>
+                                </li>
+                            }
+                            else
+                            {
+                                if (item.Type == SystemMenuType.OutSite)
+                                {
+                                    <li class="nav__item">
+                                        <a href="@item.Link">@item.Title</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav__item">
+                                        <a href="/@item.Alias">@item.Title</a>
+                                    </li>
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

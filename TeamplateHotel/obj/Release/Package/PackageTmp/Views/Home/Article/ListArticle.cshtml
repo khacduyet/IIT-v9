@@ -1,0 +1,63 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using PagedList.Mvc
+@model  PagedList.IPagedList<Article>
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var lang = Request.Cookies["LanguageID"].Value;
+    Menu menuHome = ViewBag.MenuHome ?? new Menu();
+    Menu menu = ViewBag.Menu ?? new Menu();
+    IEnumerable<Article> arts = ViewBag.listArt;
+}
+<main>
+    <section>
+        <div class="section">
+            <div class="article_index recent-post">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>@GetLanguage.Language(lang, "Recent Posts")</h2>
+                    </div>
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-md-4">
+                                <div class="item">
+                                    <a href="/@menu.Alias/@item.ID/@item.Alias">
+                                        <img src="@item.Image" alt="@item.Title">
+                                    </a>
+                                    <div class="desc">
+                                        <a href="/@menu.Alias/@item.ID/@item.Alias">
+                                            <h3>@item.Title</h3>
+                                        </a>
+                                        <div class="content-desc">
+                                            @Html.Raw(item.Description)
+                                        </div>
+                                        <div class="details">
+                                            <div class="btn-detail">
+                                                <a href="/@menu.Alias/@item.ID/@item.Alias" class="button">
+                                                    @GetLanguage.Language(lang, "MORE INFO")
+                                                    <div class="button__horizontal"></div>
+                                                    <div class="button__vertical"></div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="page-navbar">
+                                <ul>
+                                    @Html.PagedListPager(Model, page => "/" + menu.Alias + "?page=" + page)
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

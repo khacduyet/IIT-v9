@@ -1,0 +1,55 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using TeamplateHotel.Controllers
+@model TeamplateHotel.Models.DetailService
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+    List<ServicesOther> so = CommentController.ServicesOther(menu.ID);
+}
+<section class="rooms-details">
+    <div class="container">
+        <div class="details_rooms">
+            <div class="">
+                <div class="owl-detai-room owl-carousel owl-theme">
+                    @foreach (var item in Model.ServiceGalleries)
+                    {
+                        <div class="item" data-hash="zero">
+                            <img src="@item.Image" alt="">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="section-title">
+                <h3> @Model.Service.Title </h3>
+            </div>
+            <div class="desc">
+                <p>
+                    @Html.Raw(Model.Service.Description)
+                </p>
+                <br>
+                <div class="service">
+                    <h3>
+                        @GetLanguage.Language(lang, "Convenient")
+                    </h3>
+                    @Html.Raw(Model.Service.Content)
+                </div>
+            </div>
+            <div class="mt-5 text-center">
+                <div class="details">
+                    <a href="https://booking-guarantee.com/Home/SelectDate?hotelKey=IIT&lang=en&currency=USD" class="btn-book">
+                        @GetLanguage.Language(lang, "GetInTouch")
+                        <i class="fal fa-angle-double-right"></i> <span> </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@Html.Partial("PartialView/_Service", so)

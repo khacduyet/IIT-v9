@@ -1,0 +1,39 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Menu menuHome = ViewBag.MenuHome ?? new Menu();
+    Menu menu = ViewBag.Menu ?? new Menu();
+    List<Slider> sliders = CommentController.GetListSlider(lang, menu.ID, true);
+}
+
+<div class="banner-wp">
+    <div class="banner banner-home">
+        <div class="banner__slide owl-carousel owl-theme">
+            @foreach (var item in sliders)
+            {
+                <div class="banner__item">
+                    <div class="banner__img"><img src="@item.Image" alt="@item.Title"></div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="quick-book">
+        <h3>@GetLanguage.Language(lang, "SEARCH")</h3>
+        <form action="/tim-kiem" method="GET" id="quick_book">
+            <div class="form-group fbook-group">
+                <input class="form-control fbook-control" id="checkIn" type="text" name="checkIn" placeholder="@GetLanguage.Language(lang, "Check-in time")" autocomplete="off">
+            </div>
+            <div class="form-group fbook-group">
+                <input class="form-control fbook-control" id="checkOut" type="text" name="checkOut" placeholder="@GetLanguage.Language(lang, "Check-out time")" autocomplete="off">
+            </div>
+            <div class="form-group fbook-group">
+                <input class="form-control fbook-control" id="checkOut" type="number" name="number" placeholder="@GetLanguage.Language(lang, "Guest")" value="0" autocomplete="off">
+            </div>
+            <div class="form-group fbook-group">
+                <button class="btn btn-action btn-book"><span>@GetLanguage.Language(lang, "CHECK AVAILABILITY")</span></button>
+            </div>
+        </form>
+    </div>
+</div>

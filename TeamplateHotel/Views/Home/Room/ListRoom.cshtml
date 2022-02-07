@@ -1,0 +1,72 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using PagedList.Mvc
+@model PagedList.IPagedList<Room>
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menuHome = ViewBag.MenuHome ?? new Menu();
+    Menu menu = ViewBag.Menu ?? new Menu();
+    var lang = Request.Cookies["LanguageID"].Value;
+    List<Article> article = ViewBag.ArticleByRoomRate;
+    Welcome wc = CommentController.getWelcome(lang);
+
+}
+@section styles{
+    <link rel="stylesheet" href="~/Content/css/style-page.css">
+}
+@Html.Partial("Banner/Banner")
+<section class="room-pages py-100">
+    <div class="container">
+        <!-- row-1 -->
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="wrap-room-pages-contents">
+                        <div class="room-pages-image">
+                            <img src="@item.Image" alt="">
+                            <div class="room-pages-home__link">
+                                <button class="book-room-now">
+                                    <a href="/@item.MenuAlias/@item.ID/@item.Alias">@GetLanguage.Language(lang, "Book Now")</a>
+                                </button>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="room-pages-contents">
+                            <div class="room-pages-contents__desc">
+                                <span>@item.Title</span>
+                            </div>
+                            <div class="room-pages-contents__title">
+                                <h3>
+                                    <span>@(((double)item.Price).ToString("N0")) @GetLanguage.Language(lang, "money")</span>
+                                </h3>
+                            </div>
+                            <div class="room-pages-contents__desc">
+                                @Html.Raw(item.Description)
+                            </div>
+                            <!-- star-rating -->
+                            <div class="room__rate ">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <!--  -->
+                    </div>
+                </div>
+            }
+
+        </div>
+        <!--  -->
+        <div class="row">
+            <div class="col-xl-12">
+                <nav aria-label="...">
+                    @Html.PagedListPager(Model, page => "/" + menu.Alias + "?page=" + page, new PagedListRenderOptions
+                           {
+                               UlElementClasses = new[] { "pagination pagination-lg" },
+                               LiElementClasses = new[] { "page-item" },
+                           })
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,110 @@
+﻿@using ProjectLibrary.Database
+@model Comment
+
+@{
+    Layout = "~/Areas/Administrator/Views/Templates/_LayoutPage.cshtml";
+}
+
+<div id="jtable-main-container"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#jtable-main-container').jtable({
+            title: '@ViewBag.Title',
+            paging: true, //Enable paging
+            pageSize: 30, //Set page size (default: 10)
+            sorting: true, //Enable sorting
+            defaultSorting: 'Name ASC', //Set default sorting
+            selecting: true, //Enable selecting
+            multiselect: true, //Allow multiple selecting
+            selectingCheckboxes: true, //Show checkboxes on first column
+            columnResizable: true, //Actually, no need to set true since it's default
+            columnSelectable: true, //Actually, no need to set true since it's default
+            saveUserPreferences: true, //Actually, no need to set true since it's default
+            toolbar: {
+                @*items: [{
+                    icon: '/Areas/Administrator/Content/img/add.png',
+                    text: 'Thêm mới',
+                    click: function () {
+                        window.location = '@Url.Action("Create", "Article")';
+                    }
+                }, {
+                    icon: '/Areas/Administrator/Content/img/Ordering.png',
+                    text: 'Sắp xếp',
+                    click: function () {
+                        $("#updateIndex").submit();
+                    }
+                }]*@
+            },
+            actions: {
+                listAction: '@Url.Action("List", "CmtArticle", new { id = ViewBag.ArtId })',
+                deleteAction: '@Url.Action("Delete", "CmtArticle")',
+            },
+            fields: {
+                Id: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                FullName: {
+                    title: '@Html.DisplayNameFor(u => u.FullName)',
+                    width: '13%',
+                    display: function (data) {
+                        return data.record.FullName;
+                    }
+                },
+                Email: {
+                    title: '@Html.DisplayNameFor(c => c.Email)',
+                    width: '13%',
+                },
+                Comment: {
+                    title: 'Comment',
+                    width: '8%',
+                    sorting: false,
+                    display: function (data) {
+                        return data.record.Comment1;
+                    }
+                },
+                Status: {
+                    title: '@Html.DisplayNameFor(c => c.Status)',
+                    width: '8%',
+                    display: function (data) {
+                        function gettext(check, id) {
+                            if (check) {
+                                $("#Status_" + id).prop('checked', true);
+                                return "Hiển Thị";
+                            }
+                            else
+                                return "Không Hiển Thị";
+                        };
+                        function getCheked(check) {
+                            if (check) {
+                                return "checked";
+                            }
+                        };
+                        return '<input title="Edit" id="Status_' + data.record.Id + '" ' + getCheked(data.record.Status) + ' type="checkbox" value="' + data.record.Status + '" onclick="Approved(' + data.record.Id + ',' + data.record.Status + ')" /> <span id="mess_' + data.record.Id + '">' + gettext(data.record.Status, data.record.Id) + '</span>';
+                    }
+                }
+            }
+        });
+        $('#jtable-main-container').jtable('load');
+    });
+</script>
+
+<script>
+    $("#Status").change(function () {
+        $('#jtable-main-container').jtable('load', { Pending: $("#Status").val() });
+    });
+    function Approved(_id, _val) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Approved","CmtArticle")',
+            dataType: 'json',
+            data: { id: _id, val: _val },
+            success: function (data) {
+                CreateMessage(data.Result);
+                $('#jtable-main-container').jtable('load');
+            }
+        });
+    }
+</script>

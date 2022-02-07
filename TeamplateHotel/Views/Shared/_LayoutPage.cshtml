@@ -1,0 +1,93 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using ProjectLibrary.Config
+@using TeamplateHotel.Models
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Hotel detailHotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
+    List<ShowObject> articleShowHots = CommentController.HotArticles(Request.Cookies["LanguageID"].Value);
+    List<Language> languages = CommentController.GetLanguages();
+    Plugin plugin = CommentController.GetPluigPlugin();
+    List<Menu> menus = CommentController.GetMainMenus(Request.Cookies["LanguageID"].Value);
+    Menu menuArticle = ViewBag.menuArticle ?? new Menu();
+    List<Menu> menufooter = CommentController.GetSecondMenus(Request.Cookies["LanguageID"].Value);
+    var language = languages.FirstOrDefault(a => a.ID == Request.Cookies["LanguageID"].Value) ?? new Language();
+    string homepage = "";
+    if (ViewBag.HomePage == true)
+    {
+        homepage = "home";
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>@ViewBag.MetaTitle</title>
+    <meta name="keywords" content="@ViewBag.MetaKeyword">
+    <meta name="description" content="@ViewBag.MetaDesctiption">
+    <link rel="shortcut icon" href="~/Content/images/favicon.png" />
+    <link href="" rel="icon">
+    <link href="" rel="apple-touch-icon">
+    <!-- Google Fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&amp;display=swap" rel="stylesheet">
+    <!-- Vendor CSS Files cdn-->
+    <link rel="stylesheet" href="~/Content/plugins/bootstrap-4.5.2/css/bootstrap.min.css">
+    <!-- fontawesome 5 Pro-->
+    <link rel="stylesheet" href="~/Content/css/fontawesome-pro-5.15.2/css/all.min.css">
+    <!-- Plugin css local-->
+    <link rel="stylesheet" href="~/Content/plugins/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/plugins/owlcarousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/Content/plugins/fancybox/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="~/Content/plugins/daterangepicker/daterangepicker.css">
+    <!-- Template Main CSS File-->
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <link rel="stylesheet" href="~/Content/css/responsive.css">
+
+    @RenderSection("styles", false)
+    <style>
+            @Html.Raw(plugin.CSS)
+    </style>
+    @Html.Raw(plugin.JS)
+</head>
+
+<body class="preload">
+    <div class="container-fluid overflow-hidden p-0">
+        <!-- header with nav-->
+        <!-- HEADER -->
+        <main>
+            @Html.Partial("PartialView/Header")
+            <!-- BODY -->
+            @RenderBody()
+        </main>
+        @Html.Partial("PartialView/Footer")
+        <!-- FOOTER -->
+    </div>
+
+    <!-- Vendor JS Files-->
+    <script src="~/Scripts/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript " src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin=" anonymous "></script>
+    <!-- js local-->
+    <script src="~/Content/plugins/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Content/plugins/fancybox/jquery.fancybox.min.js"></script>
+    <script src="~/Content/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/Content/plugins/isotope.pkgd.min.js"></script>
+    <script src="~/Content/plugins/masonry.pkgd.min.js"></script>
+    <script src="~/Content/plugins/jquery.counterup.js"></script>
+    <script src="~/Content/plugins/jquery.waypoints.js"></script>
+    <!-- Template Main JS File-->
+    <script src="~/Scripts/js/main.js"></script>
+    <script src="~/Scripts/js/slider.js"></script>
+
+    <!-- Template Main JS File -->
+    @RenderSection("scripts", false)
+</body>
+</html>
+

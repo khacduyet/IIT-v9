@@ -1,0 +1,291 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@model ProjectLibrary.Database.Room
+@{
+    ViewBag.Title = "Booking";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var lang = Request.Cookies["LanguageID"].Value;
+    Hotel hotel = CommentController.DetailHotel(lang);
+    Menu menu = ViewBag.Menu ?? new Menu();
+}
+@Html.Partial("Banner/Banner")
+<section class="section-booking-pages py-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12">
+                <!--  -->
+                <div class="booking-details">
+                    <div class="booking-details-content">
+                        <div class="details-content-title-desc">
+                            <h3>BOOKING DETAILS</h3>
+                            <p>Selected Room</p>
+                        </div>
+                        <!--  -->
+                        <div class="details-content-images">
+                            <img src="./images/booking-details-widget.jpg" alt="">
+                            <div class="details-content-desc-price">
+                                <h3>
+                                    <a href=" ">Double Room</a>
+                                </h3>
+                                <p>$ 120/ per nignt</p>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="wrap-list-booking-pages">
+                            <ul class="list-booking-pages">
+                                <li>
+                                    <p class="title">CHECK IN</p>
+                                    <p class="number">4/1/2017</p>
+                                </li>
+                                <li>
+                                    <p class="title">CHECK OUT</p>
+                                    <p class="number">10/1/2017</p>
+                                </li>
+                                <li>
+                                    <p class="title">Adult</p>
+                                    <p class="number">2</p>
+                                </li>
+                                <li>
+                                    <p class="title">Children</p>
+                                    <p class="number">2</p>
+                                </li>
+                                <li>
+                                    <p class="title">Night</p>
+                                    <p class="number">3 </p>
+                                </li>
+
+                                <li>
+                                    <p class="title">Total Price</p>
+                                    <p class="number">$ 120 </p>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="wrap-for-booking">
+                    <div class="for-booking">
+                        <h3>need help for booking !</h3>
+                        <p>help</p>
+                        <div class="for-booking-icon">
+                            <div class="icon">
+                                <span>
+                                    <i class="fa fa-mobile"></i>
+                                </span>
+                            </div>
+                            <div class="title-email">
+                                <h3>+123 456 789</h3>
+                                <p>help@luxuryhotel & resort.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12 col-12">
+                <div class="booking-infomation">
+                    <h3>
+                        PERSONAL INFORMATION
+                    </h3>
+                    <p class="desc-1">
+                        Booking form
+                    </p>
+                    <p class="desc-2">
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+                        tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                    </p>
+                    <form action="" class="form-ckeck">
+                        <div class="row">
+
+
+                            <div class="col-xl-6">
+                                <div class="form__group">
+                                    <div class="form__group-content">
+                                        <!--  <label for="form__ckecking">Arrival date</label> -->
+                                        <input class="form-control " id="checkIn" type="text" name="checkIn" placeholder="Check In"
+                                               autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form__group">
+                                    <div class="form__group-content">
+                                        <!--  <label for="form__ckecking">Arrival date</label> -->
+                                        <input class="form-control " id="checkOut" type="text" name="checkOut" placeholder="Check Out"
+                                               autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form__group">
+                                    <div class="form__group-content">
+                                        <!-- <label for="form__ckecking">Adults</label> -->
+                                        <select name="form__ckecking" id="form__ckecking">
+
+                                            <option value="adults1">Adults1</option>
+                                            <option value="adults2">Adults2</option>
+                                            <option value="adults3">Adults3</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form__group">
+                                    <div class="form__group-content">
+                                        <!-- <label for="form__ckecking">Children</label> -->
+                                        <select name="form__ckecking" id="form__ckecking">
+                                            <optgroup label="">
+                                                <option value="adults1">1 Children</option>
+                                                <option value="adults2">2 Children</option>
+                                                <option value="adults3">3 Children</option>
+                                            </optgroup>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <label for="first-name" class="sr-only">First name</label>
+                                <input type="text" class="form-control" id="first-name" placeholder="First name" name="inputEmail4">
+                                <span class="help-block"></span>
+                            </div>
+                            <div class="col-xl-6">
+                                <label for="last-name" class="sr-only">Last name</label>
+                                <input type="text" class="form-control" id="last-name" placeholder="Last name" name="inputEmail4">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <label for="email" class="sr-only">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                <span class="help-block"></span>
+                            </div>
+                            <div class="col-xl-6">
+                                <label for="phone" class="sr-only">Phone</label>
+                                <input type="tel" class="form-control" id="phone" placeholder="Phone">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <label class="sr-only" for="address-line-1">Address 1</label>
+                                <input type="text" class="form-control" id="address-line-1" placeholder="Address line 1"
+                                       name="address-line-1">
+                                <span class="help-block"></span>
+                            </div>
+                            <div class="col-xl-6">
+                                <label class="sr-only" for="address-line-2">Address 2</label>
+                                <input type="text" class="form-control" id="address-line-2" placeholder="address-line-2"
+                                       name="address-line-2">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <label class="sr-only" for="inputCity">City</label>
+                                <input type="text" class="form-control" id="inputCity" class="form-control" placeholder="City"
+                                       name="inputCity">
+                            </div>
+                            <div class="col-xl-6">
+                                <label class="sr-only" for="country">Country</label>
+                                <input type="text" class="form-control" id="country" class="form-control" placeholder="Country"
+                                       name="country">
+                            </div>
+                        </div>
+                        <!--  -->
+                        <!--  -->
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <label class="sr-only" for="exampleFormControlTextarea1">Special requirements</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" class="form-control"
+                                          name="exampleFormControlTextarea1" placeholder="Special requirements"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <button class="book-room-now">
+                                    <a href="">
+                                        Book Now By Mail
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--  -->
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#wraploadding").hide();
+            function LoadingSendEmail() {
+                $("#wraploadding").show();
+                $("#wraploadding").css("width", $(window).width());
+                $("#wraploadding").css("height", $(window).height());
+                $("#imgloadding").css("top", ($(window).height() / 2) - 80);
+            }
+
+            //validate
+            jQuery.validator.setDefaults({
+                debug: true,
+                success: "valid"
+            });
+            $("#frmBooking").validate({
+                rules: {
+                    'Phone': {
+                        required: true,
+                    },
+                    'FullName': {
+                        required: true,
+                    },
+                    'Email': {
+                        required: true,
+                        email: true
+                    },
+                    'Country': {
+                        required: true,
+                    },
+                    'Address': {
+                        required: true,
+                    },
+                    'City': {
+                        required: true,
+                    },
+                },
+                messages: {
+                    'Phone': "Please select Phone",
+                    'Address': "Please select gender",
+                    'FullName': "Please enter Full Name",
+                    'Email': "Please enter email adress",
+                    'Country': "Please select country",
+                    'City': "Please agree team conditions",
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                    LoadingSendEmail();
+                }
+            });
+        });
+    </script>
+}
+
+

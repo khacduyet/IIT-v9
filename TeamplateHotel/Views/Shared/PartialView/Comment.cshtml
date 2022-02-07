@@ -1,0 +1,37 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Controllers
+@model IEnumerable<Comment>
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+
+}
+
+
+    @if (Model.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            <div class="comments-comment">
+                <div class="comment__user-info col-xl-3 col-lg-3 col-md-3 col-sm-3 col-4">
+                    <address>
+                        <span><a href="" class="url" rel=""> @item.FullName </a></span>
+                        <br />
+                        @item.DateCreated.Value.ToString("MMMM d, yyyy 'at' h:mm tt")
+                    </address>
+                </div>
+                <div class="comment__content col-xl-9 col-lg-9 col-md-9 col-sm-9 col-8">
+                    @item.Comment1
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <li>
+            <div class="comments-comment" style="color: #fff">
+                @GetLanguage.Language(lang, "NotComment")
+            </div>
+        </li>
+
+    }

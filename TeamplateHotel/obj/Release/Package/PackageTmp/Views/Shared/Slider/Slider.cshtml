@@ -1,0 +1,25 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@{
+    Menu menuHome = ViewBag.MenuHome ?? new Menu();
+    Menu menu = ViewBag.Menu ?? new Menu();
+    List<Slider> sliders = CommentController.GetListSlider(Request.Cookies["LanguageID"].Value, menu.ID, true);
+}
+
+<div id="banner" class="section">
+    <div class="owl-banner_index owl-carousel owl-theme">
+        @foreach (var item in sliders)
+        {
+            <div class="item">
+                <img src="@item.Image" alt="@item.Title">
+
+                <div class="item-content">
+                    <div>@item.Title</div>
+                    <div>
+                        <span>@item.Content</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

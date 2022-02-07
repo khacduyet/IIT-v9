@@ -1,0 +1,47 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Controllers
+@model IEnumerable<Service>
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+}
+@section styles{
+    <link rel="stylesheet" href="~/Content/css/style-page.css">
+}
+@Html.Partial("Banner/Banner")
+<section class="service-pages py-100">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-12 col-service-pages-1">
+                    <div class="service-pages-box">
+                        <div class="service-pages-box-content">
+                            <div class="service-pages-title-desc">
+                                <div class="service-pages-box-icon">
+                                    <i class="@item.Icon"></i>
+                                </div>
+                                <h3>
+                                    <a href="/@item.MenuAlias/@item.Id/@item.Alias">
+                                        @item.Title
+                                    </a>
+                                </h3>
+                                @Html.Raw(item.Description)
+                                <div class="service-pages-link">
+                                    <button>
+                                        <a href="/@item.MenuAlias/@item.Id/@item.Alias">@GetLanguage.Language(lang, "ReadMore") </a>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

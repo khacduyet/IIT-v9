@@ -1,0 +1,24 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@{
+    Menu menuHome = ViewBag.MenuHome ?? new Menu();
+    Menu menu = ViewBag.Menu ?? new Menu();
+    List<Slider> sliders = CommentController.GetListSlider(Request.Cookies["LanguageID"].Value, menu.ID, false);
+    Slider rd = sliders.OrderByDescending(x => Guid.NewGuid()).FirstOrDefault();
+}
+<div class="banner banner-page">
+    <div class="banner__img b_page-img"><img src="@rd.Image" alt=""></div>
+    <div class="banner__caption">
+        @if (menu.Title != null && menu.Title != "")
+        {
+            <div class="sub__title">@menu.Title</div>
+            <h2 class="banner-title">@menu.MetaDescription</h2>
+            <div class="breadcrumb-wp">
+                <div class="breadcrumb">
+                    <div class="breadcrumb-item"><a href="/@menuHome.Alias">@menuHome.Title</a></div>
+                    <div class="breadcrumb-item active">@menu.Title</div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

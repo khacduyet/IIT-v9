@@ -1,0 +1,61 @@
+﻿@using TeamplateHotel.Handler
+@using TeamplateHotel.Controllers
+@using ProjectLibrary.Database
+@using TeamplateHotel.Models
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Hotel detailHotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
+    List<Review> rv = CommentController.getReview(lang);
+    List<ShowSubmenu> subMenu = CommentController.GetSecondMenusInArticle(lang);
+}
+<footer>
+    <div class="top-footer">
+        <div class="inf-footer">
+            <div class="item">
+                <div class="logo">
+                    <img src="@detailHotel.Image" alt="">
+                </div>
+            </div>
+            <div class="item">
+                <div class="info">
+                    <i class="fa fa-address-book" aria-hidden="true"></i> @GetLanguage.Language(lang, "Address").ToUpper() <br> @detailHotel.Address
+                </div>
+            </div>
+            <div class="item">
+                <div class="phone">
+                    <i class="fa fa-phone" aria-hidden="true"></i> @GetLanguage.Language(lang, "Tel").ToUpper() <br> <a href="tel:@detailHotel.Tel"> @detailHotel.Tel</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="mail">
+                    <i class="fas fa-mail-bulk"></i> @GetLanguage.Language(lang, "Email").ToUpper()<br>
+                    <a href="mailto:@detailHotel.Email ">
+                        @detailHotel.Email
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="main-footer">
+            <div class="row">
+                @foreach (var item in subMenu)
+                {
+                    if (item.articles == null)
+                    {
+                        <div class="col-md-3">
+                            <a href="/@item.menu.Alias">  @item.menu.Title</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3">
+                            <a href="/@item.menu.Alias/@item.articles.ID/@item.articles.Alias">@item.menu.Title</a>
+                        </div>
+                    }
+                }
+                <div class="col-md-3">
+                    <a href="https://webhotel.vn"> @Html.Raw(detailHotel.CopyRight)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

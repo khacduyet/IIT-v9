@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "/Areas/Administrator/Views/Templates/_LayoutPage.cshtml";
+}
+<div id="jtable-main-container"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#jtable-main-container').jtable({
+            title: '@ViewBag.Title',
+            paging: true, //Enable paging
+            pageSize: 40, //Set page size (default: 10)
+            sorting: true, //Enable sorting
+            selecting: true, //Enable selecting
+            multiselect: true, //Allow multiple selecting
+            selectingCheckboxes: true, //Show checkboxes on first column
+            columnResizable: false, //Actually, no need to set true since it's default
+            columnSelectable: true, //Actually, no need to set true since it's default
+            saveUserPreferences: false, //Actually, no need to set true since it's default
+            toolbar: {
+                items: []
+             },
+            actions: {
+                listAction: '@Url.Action("List", "Faqs")',
+                deleteAction: '@Url.Action("Delete", "Faqs")',
+                updateAction: '@Url.Action("Edit", "Faqs")',
+                createAction: '@Url.Action("Create", "Faqs")'
+            },
+            fields: {
+                Id: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                Title: {
+                    title: 'Tiêu đề',
+                    width: '15%',
+                    inputClass: 'full-width',
+                },
+                Content: {
+                    title: 'Nội dung',
+                    width: '15%',
+                    type: 'textarea'
+                },
+                Status: {
+                    title: 'Trạng thái',
+                    width: '8%',
+                    create: false,
+                    type: 'checkbox',
+                    values: { 'false': 'Không Hiển thị', 'true': 'Hiển thị' },
+                    defaultValue: 'true',
+                    display: function (data) {
+                        return data.record.Status ? "Hiển thị" :"Không Hiển thị";
+                    }
+                },
+            },
+        });
+        //Load data
+        $('#jtable-main-container').jtable('load');
+    });
+
+</script>
+

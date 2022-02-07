@@ -1,0 +1,96 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using ProjectLibrary.Config
+@model TeamplateHotel.Models.DetailArticle
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+    Hotel detailHotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
+    var lang = Request.Cookies["LanguageID"].Value;
+    List<Comment> modelCom = ViewBag.modelCom;
+}
+<section>
+    <div class="section">
+        <div class="details-article">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="content">
+                            <img src="@Model.Article.Image" alt="@Model.Article.Title">
+                            <div class="d-flex">
+                                <div class="date p-3">
+                                    <i class="far fa-calendar-alt"></i> @Model.Article.DateCreated.Value.ToString("dd, MM, yyyy")
+                                </div>
+                            </div>
+                            @Html.Raw(Model.Article.Content)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div id="hotera_latest_news-2" class="widget sidebar-widget widget_hotera_latest_news">
+                            <div class="recent-posts wow fadeInUp animated" data-wow-delay="0ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 0ms; animation-name: fadeInUp;">
+                                <div class="sidebar-title">
+                                    <h4>@GetLanguage.Language(lang, "Articles New")</h4>
+                                </div>
+                                @foreach (var item in Model.Articles.OrderByDescending(x => x.ID).Take(6))
+                                {
+                                    <div class="post">
+                                        <div class="post-thumb" style="max-width: 150px">
+                                            <img src="@item.Image" alt="@item.Title">
+                                        </div>
+                                        <div class="content">
+                                            <div class="info">@item.DateCreated.Value.ToString("dd, MM, yyyy")</div>
+                                            <h5 class="text"><a href="/@item.MenuAlias/@item.ID/@item.Alias">@item.Title</a></h5>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="section">
+    <div class="article_index recent-post">
+
+        <div class="container">
+            <div class="section-title">
+                <h2>@GetLanguage.Language(lang, "Articles Related")</h2>
+            </div>
+            <div class="row">
+                @foreach (var item in Model.Articles.OrderByDescending(x=>Guid.NewGuid()).Take(3))
+                {
+                    <div class="col-md-4">
+                        <div class="item">
+                            <a href="/@item.MenuAlias/@item.ID/@item.Alias">
+                                <img src="@item.Image" alt="@item.Title">
+                            </a>
+                            <div class="desc">
+                                <a href="/@item.MenuAlias/@item.ID/@item.Alias">
+                                    <h3>@item.Title</h3>
+                                </a>
+                                <div class="content-desc">
+                                    @Html.Raw(item.Description)
+                                </div>
+                                <div class="details">
+                                    <div class="btn-detail">
+                                        <a href="/@item.MenuAlias/@item.ID/@item.Alias" class="button">
+                                            @GetLanguage.Language(lang, "MORE INFO")
+                                            <div class="button__horizontal"></div>
+                                            <div class="button__vertical"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<section class="service service_rooms-list" style="margin: 150px 0">
+    <h2></h2>
+</section>

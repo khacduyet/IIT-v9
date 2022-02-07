@@ -1,0 +1,51 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using TeamplateHotel.Controllers
+@model TeamplateHotel.Models.DetailService
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+    List<ServicesOther> so = CommentController.ServicesOther(menu.ID);
+}
+@section styles{
+    <link rel="stylesheet" href="~/Content/css/style-page.css">
+}
+@Html.Partial("Banner/Banner")
+<!-- service-detail-pages -->
+<section class="service-detail-pages">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <div class="detail-pages-image">
+                    <img src="@Model.Service.Image" alt="">
+                </div>
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12 col-12 col-detail-pages-2">
+                <div class="service-detail-content">
+                    <h3>@Model.Service.Title</h3>
+                    @Html.Raw(Model.Service.Content)
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="service-detail-gallery">
+    <div class="container-fuild">
+        <div class="row row-garrely-page-1">
+            @foreach (var item in Model.ServiceGalleries)
+            {
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                    <figure>
+                        <a href="@item.Image" data-fancybox="gallery">
+                            <img src="@item.Image" alt="">
+                        </a>
+                    </figure>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>

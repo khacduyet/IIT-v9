@@ -1,0 +1,50 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Handler
+@using PagedList.Mvc
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Models
+@model  PagedList.IPagedList<Gallery>
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menuHome = ViewBag.MenuHome ?? new Menu();
+    var lang = Request.Cookies["LanguageID"].Value;
+    Menu menu = ViewBag.Menu ?? new Menu();
+    string[] arr = { "Galleries", "Rooms", "Services" };
+    Random rand = new Random();
+    List<AllGallery> agal = CommentController.GalleryAll();
+}
+@Html.Partial("Banner/Banner")
+
+<section class="py-100 bg-gray">
+    <div class="gallery-home">
+        <div class="container">
+            <div class="gallery_filter gall-page">
+                <div class="row">
+                    <div class="col-lg-10 col-md-12">
+                        <ul class="filter">
+                            <li class="active" data-filter="*"><span class="common_btn">@GetLanguage.Language(lang, "ALL")</span></li>
+                            <li data-filter=".@arr[0]"><span class="common_btn">@arr[0]</span></li>
+                            <li data-filter=".@arr[1]"><span class="common_btn">@arr[1]</span></li>
+                            <li data-filter=".@arr[2]"><span class="common_btn">@arr[2]</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grid gallery_item1">
+                @*@foreach (var item in Model.OrderByDescending(x => Guid.NewGuid()).Take(16))
+                    {
+                        int r = rand.Next(0, arr.Length);
+                        <div class="grid-item width-1-4 @arr[r]">
+                            <div class="item_wp"><a class="single_item" href="@item.LargeImage" data-fancybox="gallery"><img src="@item.LargeImage" alt="" /></a></div>
+                        </div>
+                    }*@
+                @foreach (var item in agal)
+                {
+                    <div class="grid-item width-1-4 @item.Title">
+                        <div class="item_wp"><a class="single_item" href="@item.Image" data-fancybox="gallery"><img src="@item.Image" alt="" /></a></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,31 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Handler
+@model TeamplateHotel.Models.DetailArticle
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+}
+<style>
+    .background-about-header {
+        height: 300px;
+    }
+
+    #back {
+        font-size: 14px;
+        color: blue;
+    }
+
+        #back:hover {
+            color: #000;
+        }
+</style>
+<div class="container posts" style="margin-top: 50px; margin-bottom: 50px;">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="aic-titel">Messages</h1>
+            <p style="text-align:justify">@Html.Raw(ViewBag.Messages) <a href="/" id="back">@((Request.Cookies["LanguageID"].Value == "vi") ? "Quay lại" : "Back")</a></p>
+        </div>
+    </div>
+</div>
+
+

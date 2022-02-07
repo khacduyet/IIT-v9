@@ -1,0 +1,261 @@
+﻿@using ProjectLibrary.Config
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using ProjectLibrary.Database
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@{
+    ViewBag.HomePage = true;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var lang = Request.Cookies["LanguageID"].Value;
+    List<Advertising> qc = CommentController.GetAdvertisings();
+    Menu menu = ViewBag.Menu ?? new Menu();
+    Hotel hotel = CommentController.DetailHotel(lang);
+    List<Slider> sliders = CommentController.GetListSlider(lang, 0);
+    List<Gallery> galleries = CommentController.lstGallery();
+    List<Room> lstRoom = CommentController.lstRoom(SystemMenuType.RoomRate, lang);
+    Welcome wc = CommentController.getWelcome(lang);
+    List<Review> rv = CommentController.getReview(lang);
+    var room = lstRoom.FirstOrDefault();
+    var articles = CommentController.NewArticles(lang);
+    List<ServicesOther> so = CommentController.ServicesIndex(lang);
+    ViewBag.RoomOther = GetLanguage.Language(lang, "Room other");
+    ECounter counter = CommentController.getCounter(lang);
+    int count = 1;
+}
+@Html.Partial("PartialView/_CheckRoom")
+<section>
+    <div class="section">
+        <div class="rooms_index">
+            <div class="container">
+                <div class="section-title">
+                    <h2>
+                        @GetLanguage.Language(lang, "SELECT YOUR ROOM").ToUpper()
+                    </h2>
+                </div>
+
+                <div class="content-room_index" data-aos="fade-right">
+                    <div class="owl-rooms_index owl-carousel owl-theme">
+                        @foreach (var item in lstRoom)
+                        {
+                            string str = "rooms_" + count;
+                            <div class="item" data-hash="@str">
+                                <img src="@item.Image" alt="">
+                                <div class="content">
+                                    <h4>
+                                        @item.Title
+                                    </h4>
+                                    <div class="desc">
+                                        @Html.Raw(item.Description)
+                                    </div>
+                                    <div class="details">
+                                        <a href="/@item.MenuAlias/@item.ID/@item.Alias">@GetLanguage.Language(lang, "Details")</a>
+                                    </div>
+                                </div>
+                            </div>
+                            if (count == lstRoom.Count())
+                            {
+                                count = 1;
+                            }
+                            else
+                            {
+                                count++;
+                            }
+                        }
+                    </div>
+                    <div class="owl-room_small">
+                        <div class="owl-rooms-small_index owl-carousel owl-theme">
+                            @foreach (var item in lstRoom)
+                            {
+                                string str = "rooms_" + count;
+                                <a href="#@str">
+                                    <img src="@item.Image" alt="@item.Title">
+                                    <h4>
+                                        @item.Title
+                                    </h4>
+                                </a>
+                                count++;
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="section">
+        <div class="book-now-index">
+            <div class="">
+                <section class="full-bleed-component attention-todetail-wrapper" id="AttentionToDetail">
+                    <div class="attention-todetail-component" style="background-image: url(@counter.Image)">
+
+                        <div class="count_index">
+                            <div class="meeting-count__block" data-aos="fade-up" data-aos-duration="1000">
+                                <div class="d-flex justify-content-between">
+                                    @{
+                                        string[] arr = counter.Counter.Split('|').ToArray();
+                                        foreach (var item in arr)
+                                        {
+                                            var c = item.Split('~').ToArray();
+                                            if (c.Length == 3)
+                                            {
+                                                <div class="item">
+                                                    <div class="meeting-count__item">
+                                                        <h1 class="title">@c[0]</h1>
+                                                        <p class="count">@c[1]</p>
+                                                        <span>@c[2]</span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <div class="book d-flex justify-content-center button-box">
+                                    @if (counter.External)
+                                    {
+                                        <a class="text-uppercase button" href="@counter.ExternalPath">
+                                            @counter.TitleButton <i class="far fa-arrow-right"></i>
+                                            <div class="button__horizontal"></div>
+                                            <div class="button__vertical"></div>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="text-uppercase button" href="/@counter.menuAlias">
+                                            @counter.TitleButton <i class="far fa-arrow-right"></i>
+                                            <div class="button__horizontal"></div>
+                                            <div class="button__vertical"></div>
+                                        </a>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="section">
+        <div class="service_index_big">
+            <div class="">
+                <div class="row">
+                    <div class="max-768">
+                        <div class="col-md-3 item-title">
+                            <div class="section-title-big">
+                                <h2>
+                                    @wc.DescUtilities
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="content" data-aos="fade-left">
+                            <img class="bg" src="@wc.BannerService" alt="">
+                            <div class="details">
+                                <div class="owl-service_index owl-carousel owl-theme">
+                                    @foreach (var item in so)
+                                    {
+                                        foreach (var it in item.services)
+                                        {
+                                            <div class="item">
+                                                <img src="@it.Image" alt="@it.Title">
+                                                <div class="desc">
+                                                    <h3>
+                                                        <a class="button" href="/@item.menu.Alias/@it.Id/@it.Alias">
+                                                            @it.Title
+                                                            <div class="button__horizontal"></div>
+                                                            <div class="button__vertical"></div>
+                                                        </a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="min-768">
+                        <div class="col-md-3 col-offset-9 item-title">
+                            <div class="section-title-big">
+                                <h2>
+                                    @wc.DescUtilities
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="section">
+        <div class="recomment" data-aos="fade-up">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="section-title-big">
+                            <h2>
+                                @GetLanguage.Language(lang, "Review")
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="col-md-9 bg">
+                        <div class="bgrol">
+                            <div class="content">
+                                <div class="owl-feeback owl-carousel owl-theme">
+                                    @foreach (var item in rv)
+                                    {
+                                        <div class="item">
+                                            <p>
+                                                @item.Comment
+                                            </p>
+                                            <div class="name">
+                                                @item.FullName
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="section">
+    <div class="latest-posts">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>@GetLanguage.Language(lang, "Articles New")</h4>
+
+                    <div class="latest-news">
+                        @foreach (var item in articles.OrderByDescending(x => x.ID).Take(3))
+                        {
+                            <div class="post-sec" data-aos="fade-in" data-aos-duration="1000">
+                                <div class="post-image">
+                                    <a href="/@item.MenuAlias/@item.ID/@item.Alias"><img src="@item.Image" alt="@item.Title"></a>
+                                </div>
+                                <div class="post-detail">
+                                    <h6><a href="/@item.MenuAlias/@item.ID/@item.Alias">@item.Title</a></h6>
+                                    @Html.Raw(item.Description)
+                                    <span>@item.DateCreated.Value.ToString("dd MMMM yyyy")</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+</div>

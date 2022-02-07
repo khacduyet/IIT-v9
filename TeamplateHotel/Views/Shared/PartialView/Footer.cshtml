@@ -1,0 +1,73 @@
+﻿@using TeamplateHotel.Handler
+@using TeamplateHotel.Controllers
+@using ProjectLibrary.Database
+@using TeamplateHotel.Models
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Hotel detailHotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
+    List<Review> rv = CommentController.getReview(lang);
+    List<ShowSubmenu> subMenu = CommentController.GetSecondMenusInArticle(lang);
+    EAbout ab = CommentController.getAbout(lang);
+}
+<div class="back-top">
+    <div class="back-top_inner"><span class="fal fa-angle-double-up"></span></div>
+</div>
+<div class="footer">
+    <div class="footer__main">
+        <div class="footer__bg"><img src="@ab.Image" alt=""></div>
+        <div class="container text-center footer__box">
+            <h2>@ab.TitleBanner</h2>
+            <div class="footer__text">
+                @Html.Raw(ab.DescriptionBanner)
+            </div>
+            <div class="footer__btn">
+                @if (ab.External)
+                {
+                    <a class="btn btn-action2" href="@ab.ExternalPath"><span>@ab.TitleButton</span></a>
+                }
+                else
+                {
+                    <a class="btn btn-action2" href="/@ab.menuAlias"><span>@ab.TitleButton</span></a>
+                }
+            </div>
+            <ul class="footer__contact">
+                <li><a href="tel:@detailHotel.Tel"><span class="footer__icon"><i class="fas fa-mobile-alt"></i></span>@detailHotel.Tel</a></li>
+                <li><a href=""><span class="footer__icon"><i class="fas fa-map-marker-alt"></i></span> @detailHotel.Address</a></li>
+                <li><a href="mailto:@detailHotel.Email"><span class="footer__icon"><i class="fas fa-envelope"></i></span> @detailHotel.Email</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="copyright">@Html.Raw(detailHotel.CopyRight)</div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="footer__cr">
+                        <ul class="footer__menu">
+                            @foreach (var item in subMenu)
+                            {
+                                if (item.articles == null)
+                                {
+                                    <li><a href="/@item.menu.Alias">@item.menu.Title</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="/@item.menu.Alias/@item.articles.ID/@item.articles.Alias">@item.menu.Title</a></li>
+                                }
+                            }
+                        </ul>
+                        <ul class="footer__social">
+                            <li><a href="@detailHotel.Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="@detailHotel.Twitter"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="@detailHotel.Youtube"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="@detailHotel.Instagram"><i class="fab fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

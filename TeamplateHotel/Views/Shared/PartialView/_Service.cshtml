@@ -1,0 +1,50 @@
+﻿@using TeamplateHotel.Controllers
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using ProjectLibrary.Database
+@model List<ServicesOther>
+@{
+    var lang = Request.Cookies["LanguageID"].Value; 
+    Welcome wc = CommentController.getWelcome(lang);
+}
+
+@if (Model.Count() > 0)
+{
+    <section class="section">
+        <div class="service_index service-details" style="background-image: url(@wc.BannerService)">
+            <div class="container">
+                <div class="section-title">
+                    <h3>
+                        @GetLanguage.Language(lang, "Utilities other")
+                    </h3>
+                </div>
+            </div>
+            <div class="container">
+                <div class="owl-other-article owl-carousel owl-theme">
+                    @foreach (var item in Model.Take(4))
+                    {
+                        if (item.services.Count() > 0)
+                        {
+                            foreach (var it in @item.services)
+                            {
+                                <div class="item">
+                                    <figure>
+                                        <figcaption style="background-image:url(@it.Image)">
+                                            <img src="@it.Image" alt="">
+                                        </figcaption>
+                                        <a href="/@it.MenuAlias/@it.Id/@it.Alias" class="btn btn-clean button">
+                                            @it.Title
+                                            <div class="button__horizontal"></div>
+                                            <div class="button__vertical"></div>
+                                        </a>
+                                    </figure>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}

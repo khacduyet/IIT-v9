@@ -1,0 +1,83 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menuHome = ViewBag.MenuHome ?? new Menu();
+    Hotel hotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
+    var lang = Request.Cookies["LanguageID"].Value;
+    Menu menu = ViewBag.Menu ?? new Menu();
+}
+<section>
+    <div class="contact-us">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info">
+                        <div class="maps">
+                            <iframe src="https://maps.google.com/maps?q=@hotel.Location&hl=@lang&z=14&amp;output=embed"
+                                    width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-contact">
+                        <h3>@GetLanguage.Language(lang, "Contact")</h3>
+                        <p>@GetLanguage.Language(lang, "IfYouQuestion")</p>
+
+                        <form method="post" id="contactform" action="/Contact/SubmitContact">
+                            <input type="text" name="Gender" id="contact_gender" value="Mr" hidden />
+                            <input type="text" name="Tel" id="contact_tel" value="" hidden />
+                            <input type="text" name="Country" id="contact_country" value="vn" hidden />
+                            <div class="form-group form-item">
+                                <label for="">@GetLanguage.Language(lang, "Name") <span>*</span></label>
+                                <input type="text" name="FullName" id="contact_name" class="form-control" placeholder="@GetLanguage.Language(lang, "EnterName")" aria-describedby="helpId">
+                                <span class="form-message"></span>
+                            </div>
+                            <div class="form-group form-item">
+                                <label for="">@GetLanguage.Language(lang, "Email") <span>*</span></label>
+                                <input type="text" name="Email" id="contact_email" class="form-control" placeholder="@GetLanguage.Language(lang, "EnterEmail")" aria-describedby="helpId">
+                                <span class="form-message"></span>
+                            </div>
+                            <div class="form-group form-item">
+                                <label for="exampleFormControlTextarea1">@GetLanguage.Language(lang, "Messages") <span>*</span></label>
+                                <textarea class="form-control" placeholder="@GetLanguage.Language(lang, "EnterMessage")" name="Request" id="contact_message" rows="5"></textarea>
+                                <span class="form-message"></span>
+                            </div>
+                            <div class="w-100 text-center">
+                                <button type="submit" class="btn-contat_us">@GetLanguage.Language(lang, "SENDMESSAGE")</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script src="~/Scripts/js/validation.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Validator({
+                form: "#contactform",
+                formGroupSelector: ".form-item",
+                errorSelector: ".form-message",
+                rules: [
+                    Validator.isRequired("#contact_name", "@Html.Raw(GetLanguage.Language(lang, "EnterName"))"),
+                    Validator.isEmail(
+                        "#contact_email",
+                        "@GetLanguage.Language(lang, "EnterEmail")"
+                    ),
+                    Validator.isRequired(
+                        "#contact_message",
+                        "@GetLanguage.Language(lang, "EnterMessage")"
+                    ),
+                ],
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,131 @@
+﻿@model ProjectLibrary.Database.Welcome
+@{
+    Layout = "/Areas/Administrator/Views/Templates/_LayoutPage.cshtml";
+}
+<div id="jtable-main-container"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#jtable-main-container').jtable({
+            title: '@ViewBag.Title',
+            paging: true, //Enable paging
+            pageSize: 40, //Set page size (default: 10)
+            sorting: true, //Enable sorting
+            selecting: true, //Enable selecting
+            multiselect: true, //Allow multiple selecting
+            selectingCheckboxes: true, //Show checkboxes on first column
+            columnResizable: false, //Actually, no need to set true since it's default
+            columnSelectable: true, //Actually, no need to set true since it's default
+            saveUserPreferences: false, //Actually, no need to set true since it's default
+            toolbar: {
+                items: []
+             },
+            actions: {
+                listAction: '@Url.Action("List", "Welcome")',
+            },
+            fields: {
+                Id: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                BannerAbout: {
+                    title: 'Banner About',
+                    sorting: false,
+                    width: '15%',
+                    inputClass: 'upload',
+                    list: false,
+                    display: function (data) {
+                        return ' <img src="' + data.record.BannerAbout + '" width="80px" height="60px"/>';
+                    },
+                },
+                BannerGallery: {
+                    title: 'Banner Gallery',
+                    sorting: false,
+                    width: '15%',
+                    inputClass: 'upload',
+                    list: false,
+                    display: function (data) {
+                        return ' <img src="' + data.record.BannerGallery + '" width="80px" height="60px"/>';
+                    },
+                },
+                BannerRoom: {
+                    title: 'Banner Room',
+                    sorting: false,
+                    width: '15%',
+                    inputClass: 'upload',
+                    list: false,
+                    display: function (data) {
+                        return ' <img src="' + data.record.BannerRoom + '" width="80px" height="60px"/>';
+                    },
+                },
+                BannerRoomPage: {
+                    title: 'Banner Room Page',
+                    sorting: false,
+                    width: '15%',
+                    inputClass: 'upload',
+                    list: false,
+                    display: function (data) {
+                        return ' <img src="' + data.record.BannerRoomPage + '" width="80px" height="60px"/>';
+                    },
+                },
+                BannerService: {
+                    title: 'Banner Service',
+                    sorting: false,
+                    width: '15%',
+                    inputClass: 'upload',
+                    list: false,
+                    display: function (data) {
+                        return ' <img src="' + data.record.BannerService + '" width="80px" height="60px"/>';
+                    },
+                },
+                DescRoom: {
+                    title: 'Mô tả phần dịch vụ',
+                    width: '15%',
+                    type: 'textarea',
+                    sorting: false,
+                },
+                DescUtilities: {
+                    title: 'Tiêu đề phần dịch vụ',
+                    width: '15%',
+                    sorting: false,
+                },
+                TitleTag: {
+                    title: 'Tiêu đề trình phát video',
+                    width: '15%',
+                    inputClass: 'full-width',
+                    sorting: false,
+                },
+                LanguageID: {
+                    title: '@Html.DisplayNameFor(c => c.LanguageID)',
+                    width: '8%',
+                    sorting: false,
+                    create: false,
+                    edit: false,
+                    display: function (data) {
+                        return data.record.LanguageID;
+                    }
+                },
+                '':
+                {
+                    title: '',
+                    width: '2%',
+                    sorting: false,
+                    display: function (data) {
+                        return '<button title="Edit" type="button" class="jtable-command-button jtable-edit-command-button" onclick="editRecord(' + data.record.Id + ')"><span>Edit</span></button>';
+                    }
+                }
+            },
+        });
+        //Load data
+        $('#jtable-main-container').jtable('load');
+    });
+
+</script>
+
+<script>
+    function editRecord(id) {
+        window.location = '@Url.Action("Update", "Welcome")/' + id;
+    }
+</script>

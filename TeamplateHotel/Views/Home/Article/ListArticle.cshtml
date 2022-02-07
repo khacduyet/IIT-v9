@@ -1,0 +1,53 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using PagedList.Mvc
+@model  PagedList.IPagedList<Article>
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var lang = Request.Cookies["LanguageID"].Value;
+    Menu menuHome = ViewBag.MenuHome ?? new Menu();
+    Menu menu = ViewBag.Menu ?? new Menu();
+    IEnumerable<Article> arts = ViewBag.listArt;
+}
+@section styles{
+    <link rel="stylesheet" href="~/Content/css/style-page.css">
+}
+@Html.Partial("Banner/Banner")
+<section>
+    <div class="new-list_wp py-100">
+        <div class="container">
+            <div class="new-list">
+                @foreach (var item in Model)
+                {
+                    <div class="room__item new-item">
+                        <div class="row no-gutters">
+                            <div class="col-lg-6 d-flex">
+                                <div class="room__img new-img"><a href="/@menu.Alias/@item.ID/@item.Alias"><img src="@item.Image" alt="" /></a></div>
+                            </div>
+                            <div class="col-lg-6 d-flex">
+                                <div class="room__detail new-detail text-center">
+                                    <a href="/@menu.Alias/@item.ID/@item.Alias">
+                                        <h3 class="room__title">@item.Title</h3>
+                                    </a>
+                                    <div class="room__text new-text mb-5">@Html.Raw(item.Description)</div><a class="btn btn-action" href="/@menu.Alias/@item.ID/@item.Alias"><span>@GetLanguage.Language(lang, "MORE INFO")</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-xl-12">
+                        <nav>
+                            @Html.PagedListPager(Model, page => "/" + menu.Alias + "?page=" + page, new PagedListRenderOptions
+                       {
+                           UlElementClasses = new[] { "pagination pagination-lg" },
+                           LiElementClasses = new[] { "page-item" },
+                       })
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

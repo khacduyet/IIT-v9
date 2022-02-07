@@ -1,0 +1,40 @@
+﻿@using TeamplateHotel.Controllers
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using ProjectLibrary.Database
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    ECounter eCounter = CommentController.getCounter(lang);
+}
+
+<section class="section py-100">
+    <div class="about-page text-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-12">
+                    <div class="element-text">
+                        <p>@eCounter.TitleButton</p>
+                    </div>
+                    <div class="row">
+                        @{
+                            string[] arr = eCounter.Counter.Split('|').ToArray();
+                            foreach (var item in arr)
+                            {
+                                var c = item.Split('~').ToArray();
+                                if (c.Length == 3)
+                                {
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="single_counter">
+                                            <h3>@c[0]</h3><span class="counter">@c[1]</span><p>@c[2]</p>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,135 @@
+﻿@using TeamplateHotel.Controllers
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using ProjectLibrary.Database
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Welcome wc = CommentController.getWelcome(lang);
+}
+
+<div class="about">
+    <div class="check-room">
+        <div class="container">
+            <div class="">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 ">
+                        <div class="why_us">
+                            <h2>@wc.TitleTag</h2>
+                            @if (wc.DescTag != null || wc.DescTag != "")
+                            {
+                                string str = "";
+                                int count = 1;
+                                string[] arr = wc.DescTag.Split('|').ToArray();
+                                foreach (var item in arr)
+                                {
+                                    str = count + "000";
+                                    <div class="item" data-aos="fade-right" data-aos-duration="@str">
+                                        <i class="fas fa-check-circle"></i>
+                                        <p>@item</p>
+                                    </div>
+                                    count *= 2;
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 ">
+                        <div class="formbook0" data-aos="fade-right">
+                            <h4>@GetLanguage.Language(lang, "SELECT YOUR ROOM") </h4>
+                            <form class="nd_booking_padding_30 nd_booking_box_sizing_border_box nd_booking_section nd_booking_bg_white" action="/tim-kiem" method="get">
+                                <div class="nd_booking_width_100_percentage nd_booking_width_100_percentage_all_iphone nd_booking_float_left nd_booking_box_sizing_border_box ">
+                                    <!--check in/out-->
+                                    <div class="nd_booking_width_50_percentage nd_booking_width_100_percentage_all_iphone  nd_booking_float_left nd_booking_box_sizing_border_box">
+                                        <div id="nd_booking_open_calendar_from" class="nd_booking_section   nd_booking_box_sizing_border_box nd_booking_text_align_center nd_booking_cursor_pointer">
+                                            <div class="nd_booking_section  nd_booking_box_sizing_border_box nd_booking_text_align_center">
+                                                <h6 class="nd_options_color_grey  nd_options_second_font nd_booking_letter_spacing_2 nd_booking_font_size_12">
+                                                    <a>@GetLanguage.Language(lang, "Check-in time") </a>
+                                                </h6>
+                                                <div class="nd_booking_section nd_booking_height_15"></div>
+                                                <div class="nd_booking_section nd_booking_height_15"></div>
+                                                <div class="">
+                                                    <div class="text-center">
+                                                        <h3 id="nd_booking_date_number_from_front" class="nd_booking_font_size_50 nd_options_color_greydark ">
+                                                            12
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                                <div class="">
+                                                    <h6 id="nd_booking_date_month_from_front" class="text-center nd_options_color_grey nd_booking_font_size_12">
+                                                        Nov, 2019
+                                                    </h6>
+                                                </div>
+                                                <div class="nd_booking_section nd_booking_height_15"></div>
+                                                <div class="nd_booking_section nd_booking_height_15 nd_booking_display_none_all_iphone">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="nd_booking_date_month_from" class="nd_booking_section nd_booking_margin_top_20">
+                                        <input type="hidden" id="nd_booking_date_number_from" class="nd_booking_section nd_booking_margin_top_20">
+                                        <input placeholder="Check In" class="nd_booking_section nd_booking_border_width_0_important nd_booking_padding_0_important nd_booking_height_0_important" type="text" name="nd_booking_archive_form_date_range_from" id="nd_booking_archive_form_date_range_from"
+                                               value="" />
+                                    </div>
+                                    <div class="nd_booking_width_50_percentage nd_booking_width_100_percentage_all_iphone  nd_booking_float_left  nd_booking_box_sizing_border_box">
+                                        <div id="nd_booking_open_calendar_to" class="nd_booking_section  nd_booking_box_sizing_border_box nd_booking_text_align_center nd_booking_cursor_pointer">
+                                            <div class="nd_booking_section  nd_booking_box_sizing_border_box nd_booking_text_align_center">
+                                                <h6 class="nd_options_color_grey nd_options_second_font nd_booking_letter_spacing_2 nd_booking_font_size_12 ">
+                                                    <a>@GetLanguage.Language(lang, "Check-out time")</a>
+                                                </h6>
+                                                <div class="nd_booking_section nd_booking_height_15"></div>
+                                                <div class="nd_booking_section nd_booking_height_15"></div>
+                                                <div class="">
+                                                    <div class="text-center">
+                                                        <h3 id="nd_booking_date_number_to_front" class="nd_booking_font_size_50 nd_options_color_greydark ">
+                                                            2
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                                <div class="">
+                                                    <h6 id="nd_booking_date_month_to_front" class=" text-center nd_options_color_grey nd_booking_font_size_12">
+                                                        Nov, 2019
+                                                    </h6>
+                                                </div>
+                                                <div class="nd_booking_section nd_booking_height_15"></div>
+
+                                                <div class="nd_booking_section nd_booking_height_15"></div>
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" id="nd_booking_date_month_to" class="nd_booking_section nd_booking_margin_top_20">
+                                        <input type="hidden" id="nd_booking_date_number_to" class="nd_booking_section nd_booking_margin_top_20">
+                                        <input placeholder="Check Out" class="nd_booking_section nd_booking_border_width_0_important nd_booking_padding_0_important nd_booking_height_0_important" type="text" name="nd_booking_archive_form_date_range_to" id="nd_booking_archive_form_date_range_to"
+                                               value="" />
+                                    </div>
+                                    <!--check in/out-->
+                                    <div class="row numbers">
+                                        <div class="col-6 input-group-addon">
+                                            <label for=""> <a href=""> @GetLanguage.Language(lang, "Adult") </a></label>
+                                            <div class="qty">
+                                                <span class="minus bg-dark">-</span>
+                                                <input type="number" class="count" name="Adult" value="1" readonly="">
+                                                <span class="plus bg-dark">+</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 input-group-addon">
+                                            <label for=""> <a href=""> @GetLanguage.Language(lang, "Child") </a></label>
+                                            <div class="qty">
+                                                <span class="minus2 bg-dark">-</span>
+                                                <input type="number" class="count2 " name="Child" value="0" readonly="">
+                                                <span class="plus2 bg-dark">+</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nd_booking_section nd_booking_height_30"></div>
+                                <div class="btnckeck">
+                                    @*<a href="https://booking-guarantee.com/Home/SelectDate?hotelKey=IIT&lang=en&currency=USD"><button type="button" class="btn-block">@GetLanguage.Language(lang, "CHECK AVAILABILITY")</button></a>*@
+                                    <button type="submit" class="btn-block">@GetLanguage.Language(lang, "CHECK AVAILABILITY")</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

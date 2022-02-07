@@ -1,0 +1,55 @@
+﻿@using TeamplateHotel.Controllers
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using ProjectLibrary.Database
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Hotel hotel = CommentController.DetailHotel(lang);
+    EAbout ab = CommentController.getAbout(lang);
+    List<Review> rev = CommentController.getReview(lang);
+}
+
+<section class="section">
+    <div class="recomment recomment_about">
+        <div class="container">
+            <div class="section-title">
+                <h3>
+                    @ab.TitleReview
+                </h3>
+                <div class="content-section-title">
+
+                    @ab.DescriptionReview
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="owl-feeback owl-carousel owl-theme">
+                    @foreach (var item in rev)
+                    {
+                        <div class="item">
+                            <div class="image">
+                                <img src="@item.Image" alt="@item.FullName">
+                            </div>
+                            <div class="content">
+                                @*<div class="title">
+                                    &#8246; Trên cả tuyệt vời &#8221;
+                                </div>*@
+                                @item.Comment
+                                <div class="name">
+                                    <div class="title">
+                                        @item.FullName
+                                    </div>
+                                    <div class="activites">
+                                        @item.Position
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

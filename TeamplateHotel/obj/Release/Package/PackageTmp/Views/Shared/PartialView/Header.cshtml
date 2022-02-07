@@ -1,0 +1,154 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using ProjectLibrary.Config
+@using TeamplateHotel.Models
+@{
+    var lang = Request.Cookies["LanguageID"].Value;
+    Hotel detailHotel = CommentController.DetailHotel(lang);
+    List<Language> languages = CommentController.GetLanguages();
+    List<Slider> sliders = CommentController.GetListSlider(lang, 0);
+    List<Menu> menus = CommentController.GetMainMenus(lang);
+    Menu menu = ViewBag.Menu ?? new Menu();
+    var alias = "";
+}
+
+<header>
+    <div class="top-header">
+
+        <div class="container">
+            <div class="row-header">
+                <div class="logo_main">
+                    <div class="">
+                        <div class="logo">
+                            <a href="/"> <img src="@detailHotel.Logo" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu_main">
+                    <div class="item-left">
+                        <div class="social-icon">
+                            <div class="language">
+                                <button class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="@languages.FirstOrDefault(x=>x.ID == Request.Cookies["LanguageID"].Value).Icon" alt="">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    @foreach (var item in languages)
+                                    {
+                                        if (item.ID != Request.Cookies["LanguageID"].Value)
+                                        {
+                                            <a href="/SelectLanguge/@item.ID" class="dropdown-item" title="@item.ID"><img src="@item.Icon" alt=""></a>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nav-left">
+                            <a class="nav_menu" href="#" onclick="$('.aside').asidebar('open')"><i class="fal fa-bars"></i></a>
+
+                            <div class="aside">
+                                <span class="close" data-dismiss="aside" aria-hidden="true"><i class="fal fa-times"></i></span>
+                                <div class="aside-contents">
+
+                                    <ul id="sidebar-menu" class="nav navbar-nav">
+                                        @{
+                                            var mnu = menus.Where(a => a.ParentID == 0).OrderBy(a => a.Index).ToList();
+                                        }
+                                        @foreach (var item in mnu)
+                                        {
+                                            var menuChilds = menus.Where(a => a.ParentID == item.ID).OrderBy(a => a.Index).ToList();
+                                            if (menuChilds.Count > 0)
+                                            {
+                                                alias = "javascript:void(0)";
+                                                <li class="item dropdown">
+                                                    <div class="btn-dropdown"><i class="far fa-plus"></i> <a href="/@item.Alias" class="btn-dropdown"> @item.Title  </a> </div>
+                                                    <ul class="dropdown-menu">
+                                                        @foreach (var itemChild in menuChilds)
+                                                        {
+                                                            if (itemChild.Type == SystemMenuType.OutSite)
+                                                            {
+                                                                <li>
+                                                                    <a href="@itemChild.Link">@itemChild.Title</a>
+                                                                </li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>
+                                                                    <a href="/@itemChild.Alias">@itemChild.Title</a>
+                                                                </li>
+                                                            }
+                                                        }
+                                                    </ul>
+                                                </li>
+                                            }
+                                            else if (item.Type == SystemMenuType.Home)
+                                            {
+                                                <li class="item">
+                                                    <a href="/">@item.Title</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                if (item.Type == SystemMenuType.OutSite)
+                                                {
+                                                    <li class="item">
+                                                        <a href="@item.Link">@item.Title</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="item">
+                                                        <a href="/@item.Alias">@item.Title</a>
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                    </ul>
+                                    <ul class="social-content">
+                                        <li>
+                                            <a href="@detailHotel.Facebook"><i class="fab fa-facebook-f"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="@detailHotel.Twitter"><i class="fab fa-twitter"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="@detailHotel.Youtube"><i class="fab fa-youtube"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="@detailHotel.Tripadvisor"><i class="fab fa-tripadvisor"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="@detailHotel.Instagram"><i class="fab fa-instagram"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="inf">
+                                        <div class="item">
+                                            @detailHotel.Address <i class="fal fa-map-marker-alt"></i>
+                                        </div>
+                                        <div class="item">
+                                            <a href="tel:@detailHotel.Tel"> @detailHotel.Tel</a> <i class="fal fa-phone"></i>
+                                        </div>
+
+                                        <div class="item">
+                                            <a href="mailto:@detailHotel.Email">@detailHotel.Email</a> <i class="far fa-envelope"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="book_now">
+                            <a href="https://booking-guarantee.com/Home/SelectDate?hotelKey=IIT&lang=en&currency=USD" @*data-toggle="modal" data-target="#modelId"*@> <i class="fal fa-bell"></i> @GetLanguage.Language(lang, "Book Now")</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- <div class="aside-backdrop"></div> -->
+
+        </div>
+    </div>
+</header>
+
+@Html.Partial("Slider/Slider")

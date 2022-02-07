@@ -1,0 +1,154 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menuHome = ViewBag.MenuHome ?? new Menu();
+    Hotel hotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
+    var lang = Request.Cookies["LanguageID"].Value;
+    Menu menu = ViewBag.Menu ?? new Menu();
+}
+@section styles{
+    <link rel="stylesheet" href="~/Content/css/style-page.css">
+}
+
+@Html.Partial("Banner/Banner")
+
+<section class="section-contact-pages py-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-12 ">
+                <div class="contact-pages-form mb-5 mb-lg-0">
+                    <h3>@GetLanguage.Language(lang, "Contact")</h3>
+                    <p class="desc-2">@GetLanguage.Language(lang, "IfYouQuestion")</p>
+
+                    <form method="post" id="contactform" action="/Contact/SubmitContact">
+                        <input type="text" name="Gender" id="contact_gender" value="Mr" hidden />
+                        <input type="text" name="Country" id="contact_country" value="vn" hidden />
+
+                        <div class="row">
+                            <div class="col-xl-12 form-group form-item">
+                                <label for="first-name" class="sr-only">@GetLanguage.Language(lang, "Name")</label>
+                                <input type="text" name="FullName" id="contact_name" class="form-control" placeholder="@GetLanguage.Language(lang, "EnterName")" aria-describedby="helpId">
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="row">
+                            <div class="col-xl-6 form-group form-item">
+                                <label for="email" class="sr-only">@GetLanguage.Language(lang, "Email")</label>
+                                <input type="email" class="form-control" name="Email" id="contact_email" placeholder="@GetLanguage.Language(lang, "EnterEmail")">
+                                <span class="form-message"></span>
+                            </div>
+                            <div class="col-xl-6 form-group form-item">
+                                <label for="phone" class="sr-only">@GetLanguage.Language(lang, "Tel")</label>
+                                <input type="tel" name="Tel" class="form-control" id="contact_phone" placeholder="@GetLanguage.Language(lang, "EnterTel")">
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <!--  -->
+                        <div class="row">
+                            <div class="col-xl-12 form-group form-item">
+                                <label class="sr-only" for="exampleFormControlTextarea1">@GetLanguage.Language(lang, "Messages")</label>
+                                <textarea class="form-control" name="Request" id="contact_message" rows="4" placeholder="@GetLanguage.Language(lang, "EnterMessage")"></textarea>
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="book-room-now">
+                                    <button type="submit">
+                                        @GetLanguage.Language(lang, "SENDMESSAGE")
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 ">
+                <div id="map-container-google-2" class="z-depth-1-half map-container">
+                    <iframe src="https://maps.google.com/maps?q=@hotel.Location&hl=@lang&z=14&amp;output=embed"
+                            width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+
+                <div class="wrap-list-contact-pages">
+                    <ul class="list-contact-pages">
+                        <li>
+                            <p class="title">
+                                <span>@GetLanguage.Language(lang, "Address"):</span>
+                                @hotel.Address
+                            </p>
+                        </li>
+                        <li>
+                            <p class="title">
+                                <span>@GetLanguage.Language(lang, "Tel"):</span>
+                                @hotel.Tel
+                            </p>
+                        </li>
+                        <li>
+                            <p class="title">
+                                <span>@GetLanguage.Language(lang, "Email"):</span>
+                                @hotel.Email
+                            </p>
+
+                        </li>
+                        <li>
+                            <p class="title"></p>
+                        </li>
+                        <li class="item-list-10">
+                            <div class="contact-pages-icon">
+                                <div class="icon">
+                                    <span>
+                                        <i class="fa fa-mobile"></i>
+                                    </span>
+                                </div>
+                                <div class="title-email">
+                                    <h3>@hotel.Tel</h3>
+                                </div>
+                            </div>
+
+                        </li>
+                        <li class="item-list-10">
+                            <p class="title-10">Hotline: @hotel.Hotline</p>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script src="~/Scripts/js/validation.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Validator({
+                form: "#contactform",
+                formGroupSelector: ".form-item",
+                errorSelector: ".form-message",
+                rules: [
+                    Validator.isRequired("#contact_name", "@Html.Raw(GetLanguage.Language(lang, "EnterName"))"),
+                    Validator.isEmail(
+                        "#contact_email",
+                        "@GetLanguage.Language(lang, "EnterEmail")"
+                    ),
+                    Validator.isRequired(
+                        "#contact_message",
+                        "@GetLanguage.Language(lang, "EnterMessage")"
+                    ),
+                    Validator.isRequired(
+                        "#contact_phone",
+                        "@GetLanguage.Language(lang, "EnterTel")"
+                    ),
+                ],
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
+}

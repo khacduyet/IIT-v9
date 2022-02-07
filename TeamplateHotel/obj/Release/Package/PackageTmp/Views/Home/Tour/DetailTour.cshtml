@@ -1,0 +1,86 @@
+﻿@using TeamplateHotel.Controllers
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using ProjectLibrary.Database
+@using ProjectLibrary.Config
+@model  ETour
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var lang = Request.Cookies["LanguageID"].Value;
+    Menu menu = ViewBag.Menu ?? new Menu();
+}
+<link rel="stylesheet" href="~/Content/css/detail-tour.css" />
+
+<div class="tour">
+    <div class="tour__title">
+        <h2>@Model.Title</h2>
+    </div>
+
+    <div class="container">
+        <div class="tour__detail">
+            <div class="detail__menu">
+                <ul class="nav nav-tabs d-none d-sm-inline-flex" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#menu2">@Model.NumberDay</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#menu3">@GetLanguage.Language(lang, "Details")</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#menu4">@GetLanguage.Language(lang, "Gallery")</a>
+                    </li>
+                </ul>
+
+                <!-- check menu -->
+                <div class="menu__toggle d-block d-sm-none">
+                    <ul class="nav nav-tabs menu__toggle--list" role="tablist">
+                        <li>
+                            <a class="nav-link menu__choose--content 2 active" data-toggle="tab" href="#menu2">@Model.NumberDay</a>
+                        </li>
+                        <li>
+                            <a class="nav-link menu__choose--content 3" data-toggle="tab" href="#menu3">@GetLanguage.Language(lang, "Details")</a>
+                        </li>
+                        <li>
+                            <a class="nav-link menu__choose--content 4" data-toggle="tab" href="#menu4">@GetLanguage.Language(lang, "Gallery")</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end check menu -->
+            </div>
+            <div class="tab-content">
+
+                <div id="menu2" class="container tab-pane active">
+                    @foreach (var item in Model.TabTours)
+                    {
+                        <h1>@item.TitleTab</h1>
+                        <div>
+                            <p>@Html.Raw(item.Content)</p>
+                        </div>
+                        <hr/>
+                    }
+                </div>
+
+                <div id="menu3" class="container tab-pane fade">
+                    @Html.Raw(Model.Description)
+                </div>
+
+                <div id="menu4" class="container tab-pane fade">
+                    <div class="row">
+                        @foreach (var item in Model.EGalleryITems)
+                        {
+                            <div class="col-12 col-md-6 col-md-4 col-lg-3">
+                                <img src="@item.Image" alt="detail">
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="https://booking-guarantee.com/Home/SelectDate?hotelKey=IIT&amp;lang=en&amp;currency=USD"><button>Book Tour</button></a>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/js/tour.js"></script>
+}

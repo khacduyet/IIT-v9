@@ -1,0 +1,135 @@
+﻿@using ProjectLibrary.Config
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using ProjectLibrary.Database
+@using TeamplateHotel.Areas.Administrator.EntityModel
+@{
+    ViewBag.HomePage = true;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var lang = Request.Cookies["LanguageID"].Value;
+    List<Advertising> qc = CommentController.GetAdvertisings();
+    Menu menu = ViewBag.Menu ?? new Menu();
+    Hotel hotel = CommentController.DetailHotel(lang);
+    List<Slider> sliders = CommentController.GetListSlider(lang, 0);
+    List<Gallery> galleries = CommentController.lstGallery();
+    List<Room> lstRoom = CommentController.lstRoom(SystemMenuType.RoomRate, lang);
+    Welcome wc = CommentController.getWelcome(lang);
+    List<Review> rv = CommentController.getReview(lang);
+    var articles = CommentController.NewArticles(lang);
+    List<ServicesOther> so = CommentController.ServicesIndex(lang);
+    ECounter counter = CommentController.getCounter(lang);
+    EAbout ab = CommentController.getAbout(lang);
+    List<AllGallery> agal = CommentController.GalleryAll();
+    string[] arr = { "Galleries", "Rooms", "Services" };
+}
+@Html.Partial("Slider/Slider")
+<section class="section-home">
+    <div class="about-us">
+        <div class="about__bg"><img src="@ab.Image" alt=""></div>
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-6 d-flex">
+                    <div class="about__img"><img src="@ab.Image1" alt=""></div>
+                </div>
+                <div class="col-lg-6 d-flex">
+                    <div class="about__detail text-center">
+                        <h2>@ab.Title</h2>
+                        <div class="about__text">@ab.Description</div><a class="btn about_btn btn-action" href="/@ab.menuAlias"><span>@GetLanguage.Language(lang, "AboutUs")</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-home py-100">
+    <div class="container">
+        <div class="room-list">
+            @foreach (var item in lstRoom.Take(3))
+            {
+                <div class="room__item">
+                    <div class="row no-gutters">
+                        <div class="col-lg-6 d-flex">
+                            <div class="room__img">
+                                <div class="img-front"><img src="@item.Image" alt="" /></div>
+                                <div class="img-back"><img src="@item.Image" alt="" /></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-flex">
+                            <div class="room__detail text-center">
+                                <a href="/@item.MenuAlias/@item.ID/@item.Alias">
+                                    <h3 class="room__title">@item.Title</h3>
+                                </a>
+                                <div class="room__text mb-5">@Html.Raw(item.Description)</div>
+                                <div class="room__rate mb-5"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><a class="btn btn-action" href="/@item.MenuAlias/@item.ID/@item.Alias"><span>@GetLanguage.Language(lang, "ReadMore")</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<section class="section-home">
+    <div class="video_container">
+        <div class="bg_holder" style="background:url(@wc.BannerRoomPage) center center / cover no-repeat">
+            <h2>@wc.TitleTag</h2><a class="video_btn" href="#!"><img src="~/Content/images/play_icon.png" alt="play_btn"></a>
+        </div>
+        <iframe class="frame_video" height="550" src="@wc.BannerRoom" allowfullscreen=""></iframe>
+    </div>
+</section>
+<section class="section-home py-100">
+    <div class="service-home">
+        <div class="container">
+            <div class="section__title">
+                <div class="sub__title"><span>@wc.DescRoom</span></div>
+                <h3>@wc.DescUtilities</h3>
+            </div>
+            <div class="row">
+                @foreach (var item in so)
+                {
+                    foreach (var it in item.services)
+                    {
+                        <div class="col-lg-3 col-md-6">
+                            <div class="serv-item text-center">
+                                <div class="serv-icon mb-4"><i class="fas fa-coffee"></i></div>
+                                <h3><a href="/@item.menu.Alias/@it.Id/@it.Alias">@it.Title</a></h3>
+                                <div class="serv-text">
+                                    @Html.Raw(it.Description)
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-home py-100 bg-gray">
+    <div class="gallery-home">
+        <div class="container">
+            <div class="section__title">
+                <div class="sub__title"><span>@wc.BannerGallery</span></div>
+                <h3>@wc.BannerAbout</h3>
+            </div>
+        </div>
+        <div class="container">
+            <div class="gallery_filter text-center">
+                <ul class="filter">
+                    <li class="active" data-filter="*"><span class="common_btn">@GetLanguage.Language(lang, "ALL")</span></li>
+                    <li data-filter=".@arr[0]"><span class="common_btn">@arr[0]</span></li>
+                    <li data-filter=".@arr[1]"><span class="common_btn">@arr[1]</span></li>
+                    <li data-filter=".@arr[2]"><span class="common_btn">@arr[2]</span></li>
+                </ul>
+            </div>
+            <div class="grid gallery_item1">
+                @foreach (var item in agal.Take(8))
+                {
+                    <div class="grid-item width-1-4 @item.Title">
+                        <div class="item_wp"><a class="single_item" href="@item.Image" data-fancybox="gallery"><img src="@item.Image" alt="" /></a></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
